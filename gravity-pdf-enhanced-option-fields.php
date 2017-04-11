@@ -69,7 +69,7 @@ class GPDF_Enhanced_Option_Fields_Checks {
 		}
 
 		/* Throw error */
-		$this->notices[] = sprintf( esc_html__( 'Gravity PDF Version %s or higher is required to use this add-on. Please upgrade Gravity PDF to the latest version.', 'gravity-pdf-universal-selectors' ), $this->required_gravitypdf_version );
+		$this->notices[] = sprintf( esc_html__( 'Gravity PDF Version %s or higher is required to use this add-on. Please upgrade Gravity PDF to the latest version.', 'gravity-pdf-enhanced-option-fields' ), $this->required_gravitypdf_version );
 	}
 
 	/**
@@ -83,10 +83,10 @@ class GPDF_Enhanced_Option_Fields_Checks {
 		?>
         <div class="error">
             <p>
-                <strong><?php esc_html_e( 'Gravity PDF Universal Selectors Installation Problem', 'gravity-pdf-universal-selectors' ); ?></strong>
+                <strong><?php esc_html_e( 'Gravity PDF Universal Selectors Installation Problem', 'gravity-pdf-enhanced-option-fields' ); ?></strong>
             </p>
 
-            <p><?php esc_html_e( 'The minimum requirements for the Gravity PDF Universal Selectors plugin have not been met. Please fix the issue(s) below to continue:', 'gravity-pdf-universal-selectors' ); ?></p>
+            <p><?php esc_html_e( 'The minimum requirements for the Gravity PDF Universal Selectors plugin have not been met. Please fix the issue(s) below to continue:', 'gravity-pdf-enhanced-option-fields' ); ?></p>
             <ul style="padding-bottom: 0.5em">
 				<?php foreach ( $this->notices as $notice ) : ?>
                     <li style="padding-left: 20px;list-style: inside"><?php echo $notice; ?></li>

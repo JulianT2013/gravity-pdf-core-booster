@@ -4,6 +4,7 @@ namespace GFPDF\Plugins\EnhancedOptionFields;
 
 use GFPDF\Plugins\EnhancedOptionFields\Options\AddOptionsConfiguration;
 use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayAllOptions;
+use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayLabelOrValue;
 use GFPDF\Plugins\EnhancedOptionFields\Styles\AddStyles;
 use GPDFAPI;
 
@@ -64,6 +65,9 @@ class Bootstrap {
 
 		$display_options = new DisplayAllOptions();
 		$display_options->init();
+
+		$display_label_or_value = new DisplayLabelOrValue();
+		$display_label_or_value->init();
 
 		$add_styles = new AddStyles();
 		$add_styles->init();

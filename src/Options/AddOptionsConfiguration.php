@@ -76,14 +76,27 @@ class AddOptionsConfiguration implements Helper_Interface_Filters {
 		if ( $this->is_template_core_or_universal() ) {
 			$settings['show_all_options'] = [
 				'id'      => 'show_all_options',
-				'name'    => 'Show all options?',
+				'name'    => esc_html__( 'Show Field Options', 'gravity-pdf-enhanced-option-fields' ),
 				'type'    => 'multicheck',
 				'options' => [
-					'Radio'       => 'Show all options for Radio fields?',
-					'Checkbox'    => 'Show all options for Checkbox fields?',
-					'Select'      => 'Show all options for Select fields?',
-					'Multiselect' => 'Show all options for Multiselect fields?',
+					'Radio'       => esc_html__( 'Show all options for Radio Fields', 'gravity-pdf-enhanced-option-fields' ),
+					'Checkbox'    => esc_html__( 'Show all options for Checkbox Fields', 'gravity-pdf-enhanced-option-fields' ),
+					'Select'      => esc_html__( 'Show all options for Select Fields', 'gravity-pdf-enhanced-option-fields' ),
+					'Multiselect' => esc_html__( 'Show all options for Multiselect Fields', 'gravity-pdf-enhanced-option-fields' ),
 				],
+				'tooltip' => '<h6>' . esc_html__( 'Help', 'gravity-forms-pdf-extended' ) . '</h6>' . sprintf( esc_html__( '', 'gravity-pdf-enhanced-option-fields' ) ),
+			];
+
+			$settings['option_label_or_value'] = [
+				'id'      => 'option_label_or_value',
+				'name'    => esc_html__( 'Option Field Display', 'gravity-pdf-enhanced-option-fields' ),
+				'type'    => 'radio',
+				'options' => [
+					'Label' => esc_html__( 'Show Label', 'gravity-pdf-enhanced-option-fields' ),
+					'Value' => esc_html__( 'Show Value', 'gravity-pdf-enhanced-option-fields' ),
+				],
+				'std'     => 'Label',
+				'tooltip' => '<h6>' . esc_html__( 'Help', 'gravity-forms-pdf-extended' ) . '</h6>' . sprintf( esc_html__( '', 'gravity-pdf-enhanced-option-fields' ) ),
 			];
 		}
 
