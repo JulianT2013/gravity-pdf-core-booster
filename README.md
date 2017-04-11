@@ -1,9 +1,9 @@
-Gravity PDF
+Gravity PDF Enhanced Option Fields
 ==========================
 
 [![Build Status](https://travis-ci.org/GravityPDF/gravity-pdf-enhanced-option-fields.svg?branch=development)](https://travis-ci.org/GravityPDF/gravity-pdf-enhanced-option-fields)
 
-Gravity PDF is a commercial plugin [available from GravityPDF.com](#). The plugin is hosted here on a public GitHub repository in order to better facilitate community contributions from developers and users. If you have a suggestion, a bug report, or a patch for an issue, feel free to submit it here.
+Gravity PDF Enhanced Option Fields is a commercial plugin [available from GravityPDF.com](#). The plugin is hosted here on a public GitHub repository in order to better facilitate community contributions from developers and users. If you have a suggestion, a bug report, or a patch for an issue, feel free to submit it here.
 
 If you are using the plugin on a live site, please purchase a valid license from the website. **We cannot provide support to anyone that does not hold a valid license key**.
 
@@ -11,7 +11,7 @@ If you are using the plugin on a live site, please purchase a valid license from
 
 This Git repository is for developers who want to contribute to Gravity PDF Enhanced Option Fields. **Don't use it in production**. For production use, [purchase a license and install the packaged version from our online store](#).
 
-The `development` branch is considered our bleeding edge branch, with all new changes pushed to it. The `master` branch is our latest stable version of Gravity PDF.
+The `development` branch is considered our bleeding edge branch, with all new changes pushed to it. The `master` branch is our latest stable version of Gravity PDF Enhanced Option Fields.
 
 # Installation
 
@@ -27,7 +27,7 @@ Still to come...
 
 # Contributions
 
-You are more than welcome to contribute to Gravity PDF but we recommend you [open a new issue on GitHub](https://github.com/GravityPDF/gravity-pdf-enhanced-option-fields/issues) and discuss your use-case before creating a pull request.
+You are more than welcome to contribute to Gravity PDF Enhanced Option Fields but we recommend you [open a new issue on GitHub](https://github.com/GravityPDF/gravity-pdf-enhanced-option-fields/issues) and discuss your use-case before creating a pull request.
 
 There are a few guidelines that need to be followed to ensure a smooth pull request. These include:
 
@@ -49,6 +49,6 @@ We use PHPUnit to test out all the PHP we write. The tests are located in `tests
 Installing the testing environment is best done using a flavour of Vagrant (try [Varying Vagrant Vagrants](https://github.com/Varying-Vagrant-Vagrants/VVV)).
 
 1. From your terminal SSH into your Vagrant box using the `vagrant ssh` command
-2. `cd` into the root of your Gravity PDF directory
+2. `cd` into the root of your Gravity PDF Enhanced Option Fields directory
 3. Run `bash tests/bin/install.sh gravitypdf_test root root localhost` where `root root` is substituted for your mysql username and password (VVV users can run the command as is).
 4. Upon success you can run `vendor/bin/phpunit` and `vendor/bin/phpunit --group ajax`
