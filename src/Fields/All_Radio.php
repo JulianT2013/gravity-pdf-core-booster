@@ -57,16 +57,13 @@ class All_Radio extends Field_Radio {
 	 * @since 1.0
 	 */
 	public function html( $value = '', $label = true ) {
-
 		$selected_item = $this->value();
-
-		$value         = apply_filters( 'gfpdf_show_field_value', false ); /* Set to `true` to show a field's value instead of the label */
 		$field_choices = $this->field->choices;
 
 		/* Add Other option if present */
 		if ( $this->selected_is_other( $field_choices, $selected_item['value'] ) ) {
 			$field_choices[] = [
-				'text' => $selected_item['value'],
+				'text'  => $selected_item['value'],
 				'value' => $selected_item['value'],
 			];
 		}
@@ -82,7 +79,7 @@ class All_Radio extends Field_Radio {
 	}
 
 	/**
-	 * @param array $choices
+	 * @param array  $choices
 	 * @param string $selected
 	 *
 	 * @return bool
@@ -108,6 +105,7 @@ class All_Radio extends Field_Radio {
 	 * @since 1.0
 	 */
 	private function get_option_markup( $option, $key, $selected ) {
+		$value            = apply_filters( 'gfpdf_show_field_value', false, $this->field, $option ); /* Set to `true` to show a field's value instead of the label */
 		$sanitized_option = ( $value ) ? $option['value'] : $option['text'];
 		$checked          = ( $option['value'] === $selected ) ? '&#9746;' : '&#9744;';
 

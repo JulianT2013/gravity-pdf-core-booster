@@ -57,12 +57,9 @@ class All_Multiselect extends Field_Multiselect {
 	 * @since 1.0
 	 */
 	public function html( $value = '', $label = true ) {
-
 		$selected_items_value = $this->get_select_items_values();
 
-		$value = apply_filters( 'gfpdf_show_field_value', false ); /* Set to `true` to show a field's value instead of the label */
-
-		$html  = '<ul class="checked multiselect multiselect-show-all-options">';
+		$html = '<ul class="checked multiselect multiselect-show-all-options">';
 		foreach ( $this->field->choices as $key => $option ) {
 			$html .= $this->get_option_markup( $option, $key, $selected_items_value );
 		}
@@ -80,6 +77,7 @@ class All_Multiselect extends Field_Multiselect {
 	 * @since 1.0
 	 */
 	private function get_option_markup( $option, $key, $selected ) {
+		$value            = apply_filters( 'gfpdf_show_field_value', false, $this->field, $option ); /* Set to `true` to show a field's value instead of the label */
 		$sanitized_option = ( $value ) ? $option['value'] : $option['text'];
 		$checked          = ( in_array( $option['value'], $selected ) ) ? '&#9746;' : '&#9744;';
 

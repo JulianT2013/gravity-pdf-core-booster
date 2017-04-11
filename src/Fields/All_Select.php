@@ -57,10 +57,7 @@ class All_Select extends Field_Select {
 	 * @since 1.0
 	 */
 	public function html( $value = '', $label = true ) {
-
 		$selected_item = $this->value();
-
-		$value         = apply_filters( 'gfpdf_show_field_value', false ); /* Set to `true` to show a field's value instead of the label */
 
 		$html = '<ul class="checked select select-show-all-options">';
 		foreach ( $this->field->choices as $key => $option ) {
@@ -81,6 +78,7 @@ class All_Select extends Field_Select {
 	 * @since 1.0
 	 */
 	private function get_option_markup( $option, $key, $selected ) {
+		$value            = apply_filters( 'gfpdf_show_field_value', false, $this->field, $option ); /* Set to `true` to show a field's value instead of the label */
 		$sanitized_option = ( $value ) ? $option['value'] : $option['text'];
 		$checked          = ( $option['value'] === $selected ) ? '&#9746;' : '&#9744;';
 
