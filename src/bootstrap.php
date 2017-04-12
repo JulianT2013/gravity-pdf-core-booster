@@ -75,5 +75,5 @@ class Bootstrap {
 }
 
 /* Use the filter below to replace and extend our Bootstrap class if needed */
-$plugin = apply_filters( 'gpdf_enhanced_option_fields_initialise', new Bootstrap() );
+$plugin = apply_filters( 'gfpdf_enhanced_option_fields_initialise', new Bootstrap() );
 $plugin->init();
