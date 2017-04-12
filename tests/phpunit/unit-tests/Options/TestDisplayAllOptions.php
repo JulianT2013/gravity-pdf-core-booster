@@ -147,10 +147,10 @@ class TestDisplayAllOptions extends WP_UnitTestCase {
 	public function provider_maybe_autoload_class() {
 		return [
 			[ 'GF_Field', new \GF_Field() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\All_Radio', new \GF_Field_Radio() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\All_Select', new \GF_Field_Select() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\All_Checkbox', new \GF_Field_Checkbox() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\All_Multiselect', new \GF_Field_MultiSelect() ],
+			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllRadio', new \GF_Field_Radio() ],
+			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllSelect', new \GF_Field_Select() ],
+			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllCheckbox', new \GF_Field_Checkbox() ],
+			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllMultiselect', new \GF_Field_MultiSelect() ],
 		];
 	}
 
