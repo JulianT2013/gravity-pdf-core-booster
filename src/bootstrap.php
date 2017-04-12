@@ -6,7 +6,7 @@ use GFPDF\Plugins\EnhancedOptionFields\Options\AddOptionsConfiguration;
 use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayAllOptions;
 use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayLabelOrValue;
 use GFPDF\Plugins\EnhancedOptionFields\Styles\AddStyles;
-use GPDFAPI;
+use GFPDF\Helper\Helper_Singleton;
 
 /**
  * Bootstrap Class
@@ -53,27 +53,43 @@ require_once( __DIR__ . '/../vendor/autoload.php' );
 class Bootstrap {
 
 	/**
+	 * Makes our MVC classes sudo-singletons by allowing easy access to the original objects
+	 * through `$singleton->get_class();`
+	 *
+	 * @var Helper_Singleton
+	 *
+	 * @since 1.0
+	 */
+	public $singleton;
+
+	/**
 	 * @since 1.0
 	 */
 	public function init() {
+		$this->singleton = new Helper_Singleton();
+
 		/* Get the current PDF template (if any) and check the group is Core or Universal */
-		$form_settings = GPDFAPI::get_mvc_class( 'Model_Form_Settings' );
-		$templates     = GPDFAPI::get_templates_class();
+		$form_settings = \GPDFAPI::get_mvc_class( 'Model_Form_Settings' );
+		$templates     = \GPDFAPI::get_templates_class();
 
-		$add_options = new AddOptionsConfiguration( $form_settings, $templates );
-		$add_options->init();
+		$classes = [
+			new AddOptionsConfiguration( $form_settings, $templates ),
+			new DisplayAllOptions(),
+			new DisplayLabelOrValue(),
+			new AddStyles(),
+		];
 
-		$display_options = new DisplayAllOptions();
-		$display_options->init();
-
-		$display_label_or_value = new DisplayLabelOrValue();
-		$display_label_or_value->init();
-
-		$add_styles = new AddStyles();
-		$add_styles->init();
+		/* Initialise our classes and add to our singleton */
+		array_walk( $classes, function( $class ) {
+			$class->init();
+			$this->singleton->add_class( $class );
+		} );
 	}
 }
 
 /* Use the filter below to replace and extend our Bootstrap class if needed */
 $plugin = apply_filters( 'gfpdf_enhanced_option_fields_initialise', new Bootstrap() );
 $plugin->init();
+
+/* Use the action below to access our Bootstrap class, and any singletons saved in $plugin->singleton */
+do_action( 'gfpdf_enhanced_option_fields_init', $plugin );
