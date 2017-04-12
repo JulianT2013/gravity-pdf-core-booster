@@ -5,10 +5,10 @@ namespace GFPDF\Plugins\EnhancedOptionFields\Options;
 use GFPDF\Helper\Helper_Abstract_Fields;
 use GFPDF\Helper\Helper_Interface_Actions;
 use GFPDF\Helper\Helper_Interface_Filters;
-use GFPDF\Plugins\EnhancedOptionFields\Fields\All_Checkbox;
-use GFPDF\Plugins\EnhancedOptionFields\Fields\All_Multiselect;
-use GFPDF\Plugins\EnhancedOptionFields\Fields\All_Radio;
-use GFPDF\Plugins\EnhancedOptionFields\Fields\All_Select;
+use GFPDF\Plugins\EnhancedOptionFields\Fields\AllCheckbox;
+use GFPDF\Plugins\EnhancedOptionFields\Fields\AllMultiselect;
+use GFPDF\Plugins\EnhancedOptionFields\Fields\AllRadio;
+use GFPDF\Plugins\EnhancedOptionFields\Fields\AllSelect;
 
 use GPDFAPI;
 
@@ -65,7 +65,7 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	 * @since 1.0
 	 */
 	public function add_actions() {
-		add_action( 'gfpdf_pre_html_fields', [ $this, 'get_settings' ], 10, 2 );
+		add_action( 'gfpdf_pre_html_fields', [ $this, 'save_settings' ], 10, 2 );
 		add_action( 'gfpdf_post_html_fields', [ $this, 'reset_settings' ], 10, 2 );
 	}
 
@@ -82,8 +82,17 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	 *
 	 * @since 1.0
 	 */
-	public function get_settings( $entry, $settings ) {
+	public function save_settings( $entry, $settings ) {
 		$this->settings = $settings['settings'];
+	}
+
+	/**
+	 * @return array
+	 *
+	 * @since 1.0
+	 */
+	public function get_settings() {
+		return $this->settings;
 	}
 
 	/**
@@ -109,19 +118,19 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 			$option_config = $this->settings['show_all_options'];
 
 			if ( $field->type === 'radio' && isset( $option_config['Radio'] ) ) {
-				return new All_Radio( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				return new AllRadio( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 
 			if ( $field->type === 'select' && isset( $option_config['Select'] ) ) {
-				return new All_Select( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				return new AllSelect( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 
 			if ( $field->type === 'checkbox' && isset( $option_config['Checkbox'] ) ) {
-				return new All_Checkbox( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				return new AllCheckbox( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 
 			if ( $field->type === 'multiselect' && isset( $option_config['Multiselect'] ) ) {
-				return new All_Multiselect( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				return new AllMultiselect( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 		}
 

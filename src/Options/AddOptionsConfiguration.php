@@ -48,11 +48,22 @@ class AddOptionsConfiguration implements Helper_Interface_Filters {
 	private $form_settings;
 	private $templates;
 
+	/**
+	 * AddOptionsConfiguration constructor.
+	 *
+	 * @param Model_Form_Settings $form_settings
+	 * @param Helper_Templates    $templates
+	 *
+	 * @since 1.0
+	 */
 	public function __construct( Model_Form_Settings $form_settings, Helper_Templates $templates ) {
 		$this->form_settings = $form_settings;
 		$this->templates     = $templates;
 	}
 
+	/**
+	 * @since 1.0
+	 */
 	public function init() {
 		$this->add_filters();
 	}
@@ -73,7 +84,9 @@ class AddOptionsConfiguration implements Helper_Interface_Filters {
 	 */
 	public function add_template_option( $settings ) {
 
-		if ( $this->is_template_core_or_universal() ) {
+		$override = apply_filters( 'gfpdf_override_template_options', false, $settings ); /* Change this to true to override the core / universal check */
+
+		if ( $override || $this->is_template_core_or_universal() ) {
 			$settings['show_all_options'] = [
 				'id'      => 'show_all_options',
 				'name'    => esc_html__( 'Show Field Options', 'gravity-pdf-enhanced-option-fields' ),
