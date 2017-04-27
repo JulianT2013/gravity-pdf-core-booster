@@ -8,8 +8,11 @@
  * Author URI:      https://gravitypdf.com
  * Text Domain:     gravity-pdf-enhanced-option-fields
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         1.0
  */
+
+define( 'GFPDF_ENHANCED_OPTION_FIELD_FILE', __FILE__ );
+define( 'GFPDF_ENHANCED_OPTION_VERSION', '1.0' );
 
 /**
  * Class GPDF_Universal_Selector_Checks

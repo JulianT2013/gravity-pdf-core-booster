@@ -6,7 +6,12 @@ use GFPDF\Plugins\EnhancedOptionFields\Options\AddOptionsConfiguration;
 use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayAllOptions;
 use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayLabelOrValue;
 use GFPDF\Plugins\EnhancedOptionFields\Styles\AddStyles;
+
+use GFPDF\Helper\Licensing\EDD_SL_Plugin_Updater;
+use GFPDF\Helper\Helper_Abstract_Licensing;
 use GFPDF\Helper\Helper_Singleton;
+
+use GPDFAPI;
 
 /**
  * Bootstrap Class
@@ -50,7 +55,7 @@ require_once( __DIR__ . '/../vendor/autoload.php' );
  *
  * @package GFPDF\Plugins\EnhancedOptionFields
  */
-class Bootstrap {
+class Bootstrap extends Helper_Abstract_Licensing {
 
 	/**
 	 * Makes our MVC classes sudo-singletons by allowing easy access to the original objects
@@ -63,32 +68,60 @@ class Bootstrap {
 	public $singleton;
 
 	/**
+	 * @param array $classes
+	 *
 	 * @since 1.0
 	 */
-	public function init() {
-		$this->singleton = new Helper_Singleton();
-
-		/* Get the current PDF template (if any) and check the group is Core or Universal */
-		$form_settings = \GPDFAPI::get_mvc_class( 'Model_Form_Settings' );
-		$templates     = \GPDFAPI::get_templates_class();
-
-		$classes = [
-			new AddOptionsConfiguration( $form_settings, $templates ),
+	public function init( $classes = [] ) {
+		/* Create new intances of the plugin's classes */
+		$classes = array_merge( $classes, [
+			new AddOptionsConfiguration( GPDFAPI::get_mvc_class( 'Model_Form_Settings' ), GPDFAPI::get_templates_class() ),
 			new DisplayAllOptions(),
 			new DisplayLabelOrValue(),
 			new AddStyles(),
-		];
+		] );
 
-		/* Initialise our classes and add to our singleton */
-		array_walk( $classes, function( $class ) {
-			$class->init();
-			$this->singleton->add_class( $class );
-		} );
+		/* Run the setup */
+		parent::init( $classes );
+	}
+
+	/**
+	 * @since 1.0
+	 */
+	public function plugin_updater() {
+
+		/* Skip over this addon if license status isn't active */
+		$license_info = $this->get_license_info();
+		if ( $license_info['status'] !== 'active' ) {
+			return;
+		}
+
+		new EDD_SL_Plugin_Updater(
+			GPDFAPI::get_data_class()->store_url,
+			$this->get_main_plugin_file(),
+			[
+				'version'   => $this->get_version(),
+				'license'   => $license_info['license'],
+				'item_name' => $this->get_addon_name(),
+				'author'    => $this->get_version(),
+				'beta'      => false,
+			]
+		);
 	}
 }
 
 /* Use the filter below to replace and extend our Bootstrap class if needed */
-$plugin = apply_filters( 'gfpdf_enhanced_option_fields_initialise', new Bootstrap() );
+$plugin = apply_filters( 'gfpdf_enhanced_option_fields_initialise', new Bootstrap(
+	'gravity-pdf-enhanced-option-fields',
+	'Gravity PDF Enhanced Option Fields',
+	'Gravity PDF',
+	GFPDF_ENHANCED_OPTION_VERSION,
+	GFPDF_ENHANCED_OPTION_FIELD_FILE,
+	GPDFAPI::get_data_class(),
+	GPDFAPI::get_options_class(),
+	new Helper_Singleton()
+) );
+
 $plugin->init();
 
 /* Use the action below to access our Bootstrap class, and any singletons saved in $plugin->singleton */
