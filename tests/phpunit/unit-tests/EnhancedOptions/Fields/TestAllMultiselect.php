@@ -1,12 +1,12 @@
 <?php
 
-namespace GFPDF\Tests;
+namespace GFPDF\Tests\EnhancedOptions;
 
-use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllRadio;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllMultiselect;
 use WP_UnitTestCase;
 
 /**
- * @package     Gravity PDF Universal Radioors
+ * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
@@ -38,13 +38,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class TestAllRadio
+ * Class TestAllMultiselect
  *
  * @package GFPDF\Tests
  *
  * @group   fields
  */
-class TestAllRadio extends WP_UnitTestCase {
+class TestAllMultiselect extends WP_UnitTestCase {
 
 	/**
 	 * @var AllCheckbox
@@ -56,9 +56,9 @@ class TestAllRadio extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$select          = new \GF_Field_Radio();
-		$select->id      = 1;
-		$select->choices = [
+		$multiselect          = new \GF_Field_MultiSelect();
+		$multiselect->id      = 1;
+		$multiselect->choices = [
 			[
 				'text'  => 'Option 1',
 				'value' => 'Option 1 Value',
@@ -80,12 +80,33 @@ class TestAllRadio extends WP_UnitTestCase {
 			],
 		];
 
-		$select->enableOtherChoice = true;
+		$multiselect->inputs = [
+			[
+				'id'    => '1.1',
+				'label' => 'Option 1',
+			],
 
-		$this->class = new AllRadio( $select, [
+			[
+				'id'    => '1.2',
+				'label' => 'Option 2',
+			],
+
+			[
+				'id'    => '1.3',
+				'label' => 'Option 3',
+			],
+
+			[
+				'id'    => '1.4',
+				'label' => 'Option 4',
+			],
+		];
+
+		$this->class = new AllMultiselect( $multiselect, [
 			'form_id' => 0,
 			'id'      => 0,
-			'1'     => 'Option 2 Value',
+			'1.2'     => 'Option 2 Value',
+			'1.4'     => 'Option 4 Value',
 		], \GPDFAPI::get_form_class(), \GPDFAPI::get_misc_class() );
 	}
 
@@ -106,7 +127,7 @@ class TestAllRadio extends WP_UnitTestCase {
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 1" ) );
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> Option 2" ) );
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 3" ) );
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 4" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> Option 4" ) );
 
 		/* Show all values */
 		add_filter( 'gfpdf_show_field_value', '__return_true' );
@@ -116,16 +137,6 @@ class TestAllRadio extends WP_UnitTestCase {
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 1 Value" ) );
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> Option 2 Value" ) );
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 3 Value" ) );
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 4 Value" ) );
-
-		/* Check the "other" option */
-		$this->class = new AllRadio( $this->class->field, [
-			'form_id' => 0,
-			'id'      => 0,
-			'1'     => 'My Other Option',
-		], \GPDFAPI::get_form_class(), \GPDFAPI::get_misc_class() );
-
-		$results = $this->class->html();
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> My Other Option" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> Option 4 Value" ) );
 	}
 }

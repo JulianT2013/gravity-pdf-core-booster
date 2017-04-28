@@ -1,12 +1,12 @@
 <?php
 
-namespace GFPDF\Tests;
+namespace GFPDF\Tests\EnhancedOptions;
 
-use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllSelect;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllRadio;
 use WP_UnitTestCase;
 
 /**
- * @package     Gravity PDF Core Booster
+ * @package     Gravity PDF Universal Radioors
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
@@ -38,13 +38,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class TestAllSelect
+ * Class TestAllRadio
  *
  * @package GFPDF\Tests
  *
  * @group   fields
  */
-class TestAllSelect extends WP_UnitTestCase {
+class TestAllRadio extends WP_UnitTestCase {
 
 	/**
 	 * @var AllCheckbox
@@ -56,7 +56,7 @@ class TestAllSelect extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$select          = new \GF_Field_Select();
+		$select          = new \GF_Field_Radio();
 		$select->id      = 1;
 		$select->choices = [
 			[
@@ -80,7 +80,9 @@ class TestAllSelect extends WP_UnitTestCase {
 			],
 		];
 
-		$this->class = new AllSelect( $select, [
+		$select->enableOtherChoice = true;
+
+		$this->class = new AllRadio( $select, [
 			'form_id' => 0,
 			'id'      => 0,
 			'1'     => 'Option 2 Value',
@@ -115,5 +117,15 @@ class TestAllSelect extends WP_UnitTestCase {
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> Option 2 Value" ) );
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 3 Value" ) );
 		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Option 4 Value" ) );
+
+		/* Check the "other" option */
+		$this->class = new AllRadio( $this->class->field, [
+			'form_id' => 0,
+			'id'      => 0,
+			'1'     => 'My Other Option',
+		], \GPDFAPI::get_form_class(), \GPDFAPI::get_misc_class() );
+
+		$results = $this->class->html();
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> My Other Option" ) );
 	}
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace GFPDF\Tests;
+namespace GFPDF\Tests\EnhancedOptions;
 
-use \GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddFields;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddFields;
+use GFPDF\Plugins\CoreBooster\Shared\DoesTemplateHaveGroup;
 
 use GPDFAPI;
 use WP_UnitTestCase;
@@ -40,13 +41,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class TestAddOptionsConfiguration
+ * Class TestAddFields
  *
  * @package GFPDF\Tests
  *
  * @group   add-options
  */
-class TestAddOptionsConfiguration extends WP_UnitTestCase {
+class TestAddFields extends WP_UnitTestCase {
 
 	/**
 	 * @var AddFields
@@ -93,7 +94,7 @@ class TestAddOptionsConfiguration extends WP_UnitTestCase {
 			         )
 		         );
 
-		$this->class = new AddFields( $form_settings, $template );
+		$this->class = new AddFields( new DoesTemplateHaveGroup( $form_settings, $template ) );
 		$this->class->init();
 	}
 

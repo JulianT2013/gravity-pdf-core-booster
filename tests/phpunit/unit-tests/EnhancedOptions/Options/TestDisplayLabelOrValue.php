@@ -1,6 +1,6 @@
 <?php
 
-namespace GFPDF\Tests;
+namespace GFPDF\Tests\EnhancedOptions;
 
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayLabelOrValue;
 use WP_UnitTestCase;

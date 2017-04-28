@@ -1,6 +1,6 @@
 <?php
 
-namespace GFPDF\Tests;
+namespace GFPDF\Tests\EnhancedOptions;
 
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayAllOptions;
 use WP_UnitTestCase;
