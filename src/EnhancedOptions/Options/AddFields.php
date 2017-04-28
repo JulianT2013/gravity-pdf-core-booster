@@ -83,7 +83,7 @@ class AddFields implements Helper_Interface_Filters {
 	 */
 	public function add_template_option( $settings ) {
 
-		$override = apply_filters( 'gfpdf_override_enhanced_option_fields', false, $settings ); /* Change this to true to override the core / universal check */
+		$override = apply_filters( 'gfpdf_override_enhanced_options_fields', false, $settings ); /* Change this to true to override the core / universal check */
 
 		if ( $override || $this->group_checker->has_group() ) {
 			$settings['show_all_options'] = [

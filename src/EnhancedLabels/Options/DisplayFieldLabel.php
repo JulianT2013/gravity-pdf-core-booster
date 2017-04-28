@@ -56,7 +56,7 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	 * @since 1.0
 	 */
 	public function add_actions() {
-		add_action( 'gfpdf_pre_html_fields', [ $this, 'get_settings' ], 10, 2 );
+		add_action( 'gfpdf_pre_html_fields', [ $this, 'apply_settings' ], 10, 2 );
 		add_action( 'gfpdf_post_html_fields', [ $this, 'reset_settings' ], 10, 2 );
 	}
 
@@ -66,7 +66,7 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	 *
 	 * @since 1.0
 	 */
-	public function get_settings( $entry, $settings ) {
+	public function apply_settings( $entry, $settings ) {
 		$settings = $settings['settings'];
 
 		if ( isset( $settings['field_label_display'] ) && $settings['field_label_display'] !== 'Standard' ) {
@@ -100,14 +100,5 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	 */
 	public function reset_settings() {
 		remove_filter( 'gfpdf_field_label', [ $this, 'change_field_label_display' ] );
-	}
-
-	/**
-	 * @return bool
-	 *
-	 * @since 1.0
-	 */
-	public function show_option_value() {
-		return true;
 	}
 }

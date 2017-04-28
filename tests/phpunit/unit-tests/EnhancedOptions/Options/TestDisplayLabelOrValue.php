@@ -66,7 +66,7 @@ class TestDisplayLabelOrValue extends WP_UnitTestCase {
 	public function test_add_actions() {
 		$this->assertEquals( 10, has_action( 'gfpdf_pre_html_fields', [
 			$this->class,
-			'get_settings',
+			'apply_settings',
 		] ) );
 
 		$this->assertEquals( 10, has_action( 'gfpdf_post_html_fields', [
@@ -88,11 +88,11 @@ class TestDisplayLabelOrValue extends WP_UnitTestCase {
 		];
 
 		/* Check the filter doesn't exist when our option isn't set */
-		$this->class->get_settings( [], [ 'settings' => [] ] );
+		$this->class->apply_settings( [], [ 'settings' => [] ] );
 		$this->assertFalse( has_filter( 'gfpdf_show_field_value', [ $this->class, 'show_option_value' ] ) );
 
 		/* Check our filter exist when our option is set */
-		$this->class->get_settings( [], $settings );
+		$this->class->apply_settings( [], $settings );
 		$this->assertEquals( 10, has_filter( 'gfpdf_show_field_value', [ $this->class, 'show_option_value' ] ) );
 	}
 

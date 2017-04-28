@@ -1,8 +1,8 @@
 <?php
 
-namespace GFPDF\Tests\EnhancedOptions;
+namespace GFPDF\Tests\EnhancedLabels;
 
-use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddFields;
+use GFPDF\Plugins\CoreBooster\EnhancedLabels\Options\AddFields;
 use GFPDF\Plugins\CoreBooster\Shared\DoesTemplateHaveGroup;
 
 use GPDFAPI;
@@ -43,9 +43,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestAddFields
  *
- * @package GFPDF\Tests\EnhancedOptions
+ * @package GFPDF\Tests\EnhancedLabels
  *
- * @group   options
+ * @group   labels
  */
 class TestAddFields extends WP_UnitTestCase {
 
@@ -113,20 +113,19 @@ class TestAddFields extends WP_UnitTestCase {
 	 */
 	public function test_add_template_option() {
 
-		/* Check our two options are included */
+		/* Check our option is included */
 		$results = $this->class->add_template_option( [] );
-		$this->assertCount( 2, $results );
-		$this->assertArrayHasKey( 'show_all_options', $results );
-		$this->assertArrayHasKey( 'option_label_or_value', $results );
+		$this->assertCount( 1, $results );
+		$this->assertArrayHasKey( 'field_label_display', $results );
 
-		/* Check our two options are included when using a universal template */
-		$this->assertCount( 2, $this->class->add_template_option( [] ) );
+		/* Check our option is included when using a universal template */
+		$this->assertCount( 1, $this->class->add_template_option( [] ) );
 
-		/* Check our two options are not included when using a non-core or universal template */
+		/* Check our option is not included when using a non-core or universal template */
 		$this->assertCount( 0, $this->class->add_template_option( [] ) );
 
 		/* Check our option is included when we use our overriding filter */
-		add_filter( 'gfpdf_override_enhanced_options_fields', '__return_true' );
-		$this->assertCount( 2, $this->class->add_template_option( [] ) );
+		add_filter( 'gfpdf_override_enhanced_label_fields', '__return_true' );
+		$this->assertCount( 1, $this->class->add_template_option( [] ) );
 	}
 }
