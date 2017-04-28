@@ -9,6 +9,8 @@ use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddFields as OptionsAddFie
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayAllOptions;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayLabelOrValue;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles\AddStyles;
+use GFPDF\Plugins\CoreBooster\FieldDescription\Options\AddFields as FieldDescriptionAddFields;
+use GFPDF\Plugins\CoreBooster\FieldDescription\Options\DisplayFieldDescription;
 
 use GFPDF\Helper\Licensing\EDD_SL_Plugin_Updater;
 use GFPDF\Helper\Helper_Abstract_Licensing;
@@ -79,6 +81,8 @@ class Bootstrap extends Helper_Abstract_Licensing {
 			new DisplayAllOptions(),
 			new DisplayLabelOrValue(),
 			new AddStyles(),
+			new FieldDescriptionAddFields( $group_checker ),
+			new DisplayFieldDescription(),
 		] );
 
 		/* Run the setup */
