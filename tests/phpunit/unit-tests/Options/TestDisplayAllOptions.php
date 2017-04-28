@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\CoreBooster\Options\DisplayAllOptions;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayAllOptions;
 use WP_UnitTestCase;
 
 /**
@@ -147,10 +147,10 @@ class TestDisplayAllOptions extends WP_UnitTestCase {
 	public function provider_maybe_autoload_class() {
 		return [
 			[ 'GF_Field', new \GF_Field() ],
-			[ 'GFPDF\Plugins\CoreBooster\Fields\AllRadio', new \GF_Field_Radio() ],
-			[ 'GFPDF\Plugins\CoreBooster\Fields\AllSelect', new \GF_Field_Select() ],
-			[ 'GFPDF\Plugins\CoreBooster\Fields\AllCheckbox', new \GF_Field_Checkbox() ],
-			[ 'GFPDF\Plugins\CoreBooster\Fields\AllMultiselect', new \GF_Field_MultiSelect() ],
+			[ 'GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllRadio', new \GF_Field_Radio() ],
+			[ 'GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllSelect', new \GF_Field_Select() ],
+			[ 'GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllCheckbox', new \GF_Field_Checkbox() ],
+			[ 'GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllMultiselect', new \GF_Field_MultiSelect() ],
 		];
 	}
 

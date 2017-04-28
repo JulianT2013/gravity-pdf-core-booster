@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\CoreBooster\Fields\AllCheckbox;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllCheckbox;
 use WP_UnitTestCase;
 
 /**

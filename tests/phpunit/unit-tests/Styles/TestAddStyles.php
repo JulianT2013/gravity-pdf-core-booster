@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\CoreBooster\Styles\AddStyles;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles\AddStyles;
 use WP_UnitTestCase;
 
 /**

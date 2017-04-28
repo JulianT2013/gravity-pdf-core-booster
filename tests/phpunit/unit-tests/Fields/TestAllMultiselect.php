@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\CoreBooster\Fields\AllMultiselect;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllMultiselect;
 use WP_UnitTestCase;
 
 /**

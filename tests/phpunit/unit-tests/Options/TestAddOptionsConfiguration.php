@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use \GFPDF\Plugins\CoreBooster\Options\AddOptionsConfiguration;
+use \GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddOptionsConfiguration;
 
 use GPDFAPI;
 use WP_UnitTestCase;

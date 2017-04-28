@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\CoreBooster\Options\DisplayLabelOrValue;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayLabelOrValue;
 use WP_UnitTestCase;
 
 /**
