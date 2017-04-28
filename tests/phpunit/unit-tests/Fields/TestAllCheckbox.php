@@ -2,11 +2,11 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\EnhancedOptionFields\Fields\AllCheckbox;
+use GFPDF\Plugins\CoreBooster\Fields\AllCheckbox;
 use WP_UnitTestCase;
 
 /**
- * @package     Gravity PDF Universal Selectors
+ * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0

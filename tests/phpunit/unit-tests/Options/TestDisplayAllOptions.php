@@ -2,11 +2,11 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayAllOptions;
+use GFPDF\Plugins\CoreBooster\Options\DisplayAllOptions;
 use WP_UnitTestCase;
 
 /**
- * @package     Gravity PDF Universal Selectors
+ * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
@@ -147,10 +147,10 @@ class TestDisplayAllOptions extends WP_UnitTestCase {
 	public function provider_maybe_autoload_class() {
 		return [
 			[ 'GF_Field', new \GF_Field() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllRadio', new \GF_Field_Radio() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllSelect', new \GF_Field_Select() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllCheckbox', new \GF_Field_Checkbox() ],
-			[ 'GFPDF\Plugins\EnhancedOptionFields\Fields\AllMultiselect', new \GF_Field_MultiSelect() ],
+			[ 'GFPDF\Plugins\CoreBooster\Fields\AllRadio', new \GF_Field_Radio() ],
+			[ 'GFPDF\Plugins\CoreBooster\Fields\AllSelect', new \GF_Field_Select() ],
+			[ 'GFPDF\Plugins\CoreBooster\Fields\AllCheckbox', new \GF_Field_Checkbox() ],
+			[ 'GFPDF\Plugins\CoreBooster\Fields\AllMultiselect', new \GF_Field_MultiSelect() ],
 		];
 	}
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace GFPDF\Plugins\EnhancedOptionFields\Fields;
+namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields;
 
-use GFPDF\Helper\Fields\Field_Checkbox;
+use GFPDF\Helper\Fields\Field_Radio;
 use GFPDF\Helper\Helper_Abstract_Fields;
 
 /**
@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0
  */
-class AllCheckbox extends Field_Checkbox {
+class AllRadio extends Field_Radio {
 
 	/**
 	 * Include all checkbox options in the list and tick the ones that were selected
@@ -57,15 +57,43 @@ class AllCheckbox extends Field_Checkbox {
 	 * @since 1.0
 	 */
 	public function html( $value = '', $label = true ) {
-		$selected_items_value = $this->get_select_items_values();
+		$selected_item = $this->value();
+		$field_choices = $this->field->choices;
 
-		$html = '<ul class="checked checkbox checkbox-show-all-options">';
-		foreach ( $this->field->choices as $key => $option ) {
-			$html .= $this->get_option_markup( $option, $key, $selected_items_value );
+		/* Add Other option if present */
+		if ( $this->selected_is_other( $field_choices, $selected_item['value'] ) ) {
+			$field_choices[] = [
+				'text'  => $selected_item['value'],
+				'value' => $selected_item['value'],
+			];
 		}
+
+		$html = '<ul class="checked radio radio-show-all-options">';
+		foreach ( $field_choices as $key => $option ) {
+			$html .= $this->get_option_markup( $option, $key, $selected_item['value'] );
+		}
+
 		$html .= '</ul>';
 
 		return Helper_Abstract_Fields::html( $html );
+	}
+
+	/**
+	 * @param array  $choices
+	 * @param string $selected
+	 *
+	 * @return bool
+	 *
+	 * @since 1.0
+	 */
+	private function selected_is_other( $choices, $selected ) {
+		foreach ( $choices as $option ) {
+			if ( $option['value'] === $selected ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -77,26 +105,12 @@ class AllCheckbox extends Field_Checkbox {
 	 * @since 1.0
 	 */
 	private function get_option_markup( $option, $key, $selected ) {
-		$value = apply_filters( 'gfpdf_show_field_value', false, $this->field, $option ); /* Set to `true` to show a field's value instead of the label */
-
+		$value            = apply_filters( 'gfpdf_show_field_value', false, $this->field, $option ); /* Set to `true` to show a field's value instead of the label */
 		$sanitized_option = ( $value ) ? $option['value'] : $option['text'];
-		$checked          = ( in_array( $option['value'], $selected ) ) ? '&#9746;' : '&#9744;';
+		$checked          = ( $option['value'] === $selected ) ? '&#9746;' : '&#9744;';
 
 		return "<li id='field-{$this->field->id}-option-$key'>
 				<span style='font-size: 125%;'>$checked</span> $sanitized_option
 				</li>";
-	}
-
-	/**
-	 * @return array
-	 *
-	 * @since 1.0
-	 */
-	private function get_select_items_values() {
-		$selected_items = $this->value();
-
-		return array_map( function( $item ) {
-			return $item['value'];
-		}, $selected_items );
 	}
 }

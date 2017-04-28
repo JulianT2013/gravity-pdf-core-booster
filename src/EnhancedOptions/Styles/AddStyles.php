@@ -1,9 +1,8 @@
 <?php
 
-namespace GFPDF\Tests;
+namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles;
 
-use GFPDF\Plugins\CoreBooster\Styles\AddStyles;
-use WP_UnitTestCase;
+use GFPDF\Helper\Helper_Interface_Actions;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -20,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
     This file is part of Gravity PDF.
 
-    Gravity PDF – Copyright (C) 2016, Blue Liquid Designs
+    Gravity PDF – Copyright (C) 2017, Blue Liquid Designs
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,46 +37,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class TestAddStyles
+ * Class DisplayAllOptions
  *
- * @package GFPDF\Tests
- *
- * @group   add-styles
+ * @package GFPDF\Plugins\CoreBooster\Options
  */
-class TestAddStyles extends WP_UnitTestCase {
-
-	/**
-	 * @var AddStyles
-	 * @since 1.0
-	 */
-	private $class;
+class AddStyles implements Helper_Interface_Actions {
 
 	/**
 	 * @since 1.0
 	 */
-	public function setUp() {
-		$this->class = new AddStyles();
-		$this->class->init();
+	public function init() {
+		$this->add_actions();
 	}
 
 	/**
 	 * @since 1.0
 	 */
-	public function test_add_actions() {
-		$this->assertEquals( 10, has_action( 'gfpdf_core_template', [
-			$this->class,
-			'add_styles',
-		] ) );
+	public function add_actions() {
+		add_action( 'gfpdf_core_template', [ $this, 'add_styles' ] );
 	}
 
 	/**
 	 * @since 1.0
 	 */
-	public function test_add_styles() {
-		ob_start();
-		$this->class->add_styles();
-		$results = ob_get_clean();
-
-		$this->assertNotFalse( strpos( $results, 'show-all-options li' ) );
+	public function add_styles() {
+		echo '<style>' .
+		     file_get_contents( __DIR__ . '/enhanced-option-selector-pdf-styles.css' ) .
+		     '</style>';
 	}
 }

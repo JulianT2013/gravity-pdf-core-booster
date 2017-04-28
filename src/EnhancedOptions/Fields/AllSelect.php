@@ -1,6 +1,6 @@
 <?php
 
-namespace GFPDF\Plugins\EnhancedOptionFields\Fields;
+namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields;
 
 use GFPDF\Helper\Fields\Field_Select;
 use GFPDF\Helper\Helper_Abstract_Fields;

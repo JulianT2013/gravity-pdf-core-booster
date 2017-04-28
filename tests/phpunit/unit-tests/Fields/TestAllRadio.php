@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use GFPDF\Plugins\EnhancedOptionFields\Fields\AllRadio;
+use GFPDF\Plugins\CoreBooster\Fields\AllRadio;
 use WP_UnitTestCase;
 
 /**

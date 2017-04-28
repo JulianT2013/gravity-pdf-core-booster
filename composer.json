@@ -1,5 +1,5 @@
 {
-    "name": "gravity-pdf/universal-selectors",
+    "name": "gravity-pdf/core-booster",
     "type": "project",
     "license": "GPLv2",
     "require": {},
@@ -14,7 +14,7 @@
 
     "autoload": {
         "psr-4": {
-            "GFPDF\\Plugins\\EnhancedOptionFields\\": "src/"
+            "GFPDF\\Plugins\\CoreBooster\\": "src/"
         }
     }
 }

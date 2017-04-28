@@ -1,25 +1,25 @@
 <?php
 
 /**
- * Plugin Name:     Gravity PDF Enhanced Option Fields
- * Plugin URI:      https://gravitypdf.com/shop/gravity-pdf-enhanced-option-fields/
+ * Plugin Name:     Gravity PDF Core Booster
+ * Plugin URI:      https://gravitypdf.com/shop/core-booster-add-on/
  * Description:     PLUGIN DESCRIPTION HERE
  * Author:          Gravity PDF
  * Author URI:      https://gravitypdf.com
- * Text Domain:     gravity-pdf-enhanced-option-fields
+ * Text Domain:     gravity-pdf-core-booster
  * Domain Path:     /languages
  * Version:         1.0
  */
 
-define( 'GFPDF_ENHANCED_OPTION_FIELD_FILE', __FILE__ );
-define( 'GFPDF_ENHANCED_OPTION_VERSION', '1.0' );
+define( 'GFPDF_CORE_BOOSTER_FILE', __FILE__ );
+define( 'GFPDF_CORE_BOOSTER_VERSION', '1.0' );
 
 /**
- * Class GPDF_Universal_Selector_Checks
+ * Class GPDF_Core_Booster_Checks
  *
  * @since 1.0
  */
-class GPDF_Enhanced_Option_Fields_Checks {
+class GPDF_Core_Booster_Checks {
 
 	/**
 	 * Holds any blocker error messages stopping plugin running
@@ -72,7 +72,7 @@ class GPDF_Enhanced_Option_Fields_Checks {
 		}
 
 		/* Throw error */
-		$this->notices[] = sprintf( esc_html__( 'Gravity PDF Version %s or higher is required to use this add-on. Please upgrade Gravity PDF to the latest version.', 'gravity-pdf-enhanced-option-fields' ), $this->required_gravitypdf_version );
+		$this->notices[] = sprintf( esc_html__( 'Gravity PDF Version %s or higher is required to use this add-on. Please upgrade Gravity PDF to the latest version.', 'gravity-pdf-core-booster' ), $this->required_gravitypdf_version );
 	}
 
 	/**
@@ -86,10 +86,10 @@ class GPDF_Enhanced_Option_Fields_Checks {
 		?>
         <div class="error">
             <p>
-                <strong><?php esc_html_e( 'Gravity PDF Universal Selectors Installation Problem', 'gravity-pdf-enhanced-option-fields' ); ?></strong>
+                <strong><?php esc_html_e( 'Gravity PDF Core Booster Installation Problem', 'gravity-pdf-core-booster' ); ?></strong>
             </p>
 
-            <p><?php esc_html_e( 'The minimum requirements for the Gravity PDF Universal Selectors plugin have not been met. Please fix the issue(s) below to continue:', 'gravity-pdf-enhanced-option-fields' ); ?></p>
+            <p><?php esc_html_e( 'The minimum requirements for the Gravity PDF Core Booster plugin have not been met. Please fix the issue(s) below to continue:', 'gravity-pdf-core-booster' ); ?></p>
             <ul style="padding-bottom: 0.5em">
 				<?php foreach ( $this->notices as $notice ) : ?>
                     <li style="padding-left: 20px;list-style: inside"><?php echo $notice; ?></li>
@@ -101,5 +101,5 @@ class GPDF_Enhanced_Option_Fields_Checks {
 }
 
 /* Initialise the software */
-$gravitypdf_enhanced_option_fields = new GPDF_Enhanced_Option_Fields_Checks();
-add_action( 'gfpdf_fully_loaded', array( $gravitypdf_enhanced_option_fields, 'init' ) );
+$gravitypdf_core_booster= new GPDF_Core_Booster_Checks();
+add_action( 'gfpdf_fully_loaded', array( $gravitypdf_core_booster, 'init' ) );

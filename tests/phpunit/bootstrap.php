@@ -57,7 +57,7 @@ class GravityPDF_Universal_Selector_Unit_Tests_Bootstrap {
 		RGFormsModel::drop_tables();
 		( function_exists( 'gf_upgrade' ) ) ? gf_upgrade()->maybe_upgrade() : @GFForms::setup( true );
 
-		require $this->plugin_dir . '/gravity-pdf-enhanced-option-fields.php';
+		require $this->plugin_dir . '/gravity-pdf-core-booster.php';
 	}
 }
 

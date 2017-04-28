@@ -1,11 +1,11 @@
 <?php
 
-namespace GFPDF\Plugins\EnhancedOptionFields\Options;
+namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Options;
 
 use GFPDF\Helper\Helper_Interface_Actions;
 
 /**
- * @package     Gravity PDF Universal Selectors
+ * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class DisplayAllOptions
  *
- * @package GFPDF\Plugins\EnhancedOptionFields\Options
+ * @package GFPDF\Plugins\CoreBooster\Options
  */
 class DisplayLabelOrValue implements Helper_Interface_Actions {
 

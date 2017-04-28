@@ -1,11 +1,11 @@
 <?php
 
-namespace GFPDF\Plugins\EnhancedOptionFields;
+namespace GFPDF\Plugins\CoreBooster;
 
-use GFPDF\Plugins\EnhancedOptionFields\Options\AddOptionsConfiguration;
-use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayAllOptions;
-use GFPDF\Plugins\EnhancedOptionFields\Options\DisplayLabelOrValue;
-use GFPDF\Plugins\EnhancedOptionFields\Styles\AddStyles;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddOptionsConfiguration;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayAllOptions;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayLabelOrValue;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles\AddStyles;
 
 use GFPDF\Helper\Licensing\EDD_SL_Plugin_Updater;
 use GFPDF\Helper\Helper_Abstract_Licensing;
@@ -16,7 +16,7 @@ use GPDFAPI;
 /**
  * Bootstrap Class
  *
- * @package     Gravity PDF Universal Selectors
+ * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
@@ -53,19 +53,9 @@ require_once( __DIR__ . '/../vendor/autoload.php' );
 /**
  * Class Bootstrap
  *
- * @package GFPDF\Plugins\EnhancedOptionFields
+ * @package GFPDF\Plugins\CoreBooster
  */
 class Bootstrap extends Helper_Abstract_Licensing {
-
-	/**
-	 * Makes our MVC classes sudo-singletons by allowing easy access to the original objects
-	 * through `$singleton->get_class();`
-	 *
-	 * @var Helper_Singleton
-	 *
-	 * @since 1.0
-	 */
-	public $singleton;
 
 	/**
 	 * @param array $classes
@@ -97,12 +87,12 @@ class Bootstrap extends Helper_Abstract_Licensing {
 		}
 
 		new EDD_SL_Plugin_Updater(
-			GPDFAPI::get_data_class()->store_url,
+			$this->data->store_url,
 			$this->get_main_plugin_file(),
 			[
 				'version'   => $this->get_version(),
 				'license'   => $license_info['license'],
-				'item_name' => $this->get_addon_name(),
+				'item_name' => $this->get_name(),
 				'author'    => $this->get_version(),
 				'beta'      => false,
 			]
@@ -111,12 +101,12 @@ class Bootstrap extends Helper_Abstract_Licensing {
 }
 
 /* Use the filter below to replace and extend our Bootstrap class if needed */
-$plugin = apply_filters( 'gfpdf_enhanced_option_fields_initialise', new Bootstrap(
-	'gravity-pdf-enhanced-option-fields',
-	'Gravity PDF Enhanced Option Fields',
+$plugin = apply_filters( 'gfpdf_core_booster_initialise', new Bootstrap(
+	'gravity-pdf-core-booster',
+	'Core Booster Add-On',
 	'Gravity PDF',
-	GFPDF_ENHANCED_OPTION_VERSION,
-	GFPDF_ENHANCED_OPTION_FIELD_FILE,
+	GFPDF_CORE_BOOSTER_VERSION,
+	GFPDF_CORE_BOOSTER_FILE,
 	GPDFAPI::get_data_class(),
 	GPDFAPI::get_options_class(),
 	new Helper_Singleton()
