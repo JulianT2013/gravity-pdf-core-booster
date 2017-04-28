@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests;
 
-use \GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddOptionsConfiguration;
+use \GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddFields;
 
 use GPDFAPI;
 use WP_UnitTestCase;
@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class TestAddOptionsConfiguration extends WP_UnitTestCase {
 
 	/**
-	 * @var AddOptionsConfiguration
+	 * @var AddFields
 	 * @since 1.0
 	 */
 	private $class;
@@ -93,7 +93,7 @@ class TestAddOptionsConfiguration extends WP_UnitTestCase {
 			         )
 		         );
 
-		$this->class = new AddOptionsConfiguration( $form_settings, $template );
+		$this->class = new AddFields( $form_settings, $template );
 		$this->class->init();
 	}
 

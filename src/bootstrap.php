@@ -2,7 +2,10 @@
 
 namespace GFPDF\Plugins\CoreBooster;
 
-use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddOptionsConfiguration;
+use GFPDF\Plugins\CoreBooster\Shared\DoesTemplateHaveGroup;
+use GFPDF\Plugins\CoreBooster\EnhancedLabels\Options\AddFields as LabelsAddFields;
+use GFPDF\Plugins\CoreBooster\EnhancedLabels\Options\DisplayFieldLabel;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddFields as OptionsAddFields;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayAllOptions;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayLabelOrValue;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles\AddStyles;
@@ -64,8 +67,12 @@ class Bootstrap extends Helper_Abstract_Licensing {
 	 */
 	public function init( $classes = [] ) {
 		/* Create new intances of the plugin's classes */
+		$group_checker = new DoesTemplateHaveGroup( GPDFAPI::get_mvc_class( 'Model_Form_Settings' ), GPDFAPI::get_templates_class() );
+
 		$classes = array_merge( $classes, [
-			new AddOptionsConfiguration( GPDFAPI::get_mvc_class( 'Model_Form_Settings' ), GPDFAPI::get_templates_class() ),
+			new LabelsAddFields( $group_checker ),
+			new DisplayFieldLabel(),
+			new OptionsAddFields( $group_checker ),
 			new DisplayAllOptions(),
 			new DisplayLabelOrValue(),
 			new AddStyles(),
@@ -115,4 +122,4 @@ $plugin = apply_filters( 'gfpdf_core_booster_initialise', new Bootstrap(
 $plugin->init();
 
 /* Use the action below to access our Bootstrap class, and any singletons saved in $plugin->singleton */
-do_action( 'gfpdf_enhanced_option_fields_init', $plugin );
+do_action( 'gfpdf_core_booster_bootrapped', $plugin );

@@ -2,9 +2,8 @@
 
 namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Options;
 
+use GFPDF\Plugins\CoreBooster\Shared\DoesTemplateHaveGroup;
 use GFPDF\Helper\Helper_Interface_Filters;
-use GFPDF\Helper\Helper_Templates;
-use GFPDF\Model\Model_Form_Settings;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -39,26 +38,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class ShowAllOptions
+ * Class AddFields
  *
- * @package GFPDF\Plugins\CoreBooster\Options
+ * @package GFPDF\Plugins\CoreBooster\EnhancedLabels\Options
  */
-class AddOptionsConfiguration implements Helper_Interface_Filters {
-
-	private $form_settings;
-	private $templates;
+class AddFields implements Helper_Interface_Filters {
 
 	/**
-	 * AddOptionsConfiguration constructor.
+	 * @var DoesTemplateHaveGroup
+	 */
+	private $group_checker;
+
+	/**
+	 * AddFields constructor.
 	 *
-	 * @param Model_Form_Settings $form_settings
-	 * @param Helper_Templates    $templates
+	  * @param DoesTemplateHaveGroup $group_checker
 	 *
 	 * @since 1.0
 	 */
-	public function __construct( Model_Form_Settings $form_settings, Helper_Templates $templates ) {
-		$this->form_settings = $form_settings;
-		$this->templates     = $templates;
+	public function __construct( DoesTemplateHaveGroup $group_checker ) {
+		$this->group_checker = $group_checker;
 	}
 
 	/**
@@ -84,9 +83,9 @@ class AddOptionsConfiguration implements Helper_Interface_Filters {
 	 */
 	public function add_template_option( $settings ) {
 
-		$override = apply_filters( 'gfpdf_override_template_options', false, $settings ); /* Change this to true to override the core / universal check */
+		$override = apply_filters( 'gfpdf_override_enhanced_option_fields', false, $settings ); /* Change this to true to override the core / universal check */
 
-		if ( $override || $this->is_template_core_or_universal() ) {
+		if ( $override || $this->group_checker->has_group() ) {
 			$settings['show_all_options'] = [
 				'id'      => 'show_all_options',
 				'name'    => esc_html__( 'Show Field Options', 'gravity-pdf-core-booster' ),
@@ -97,7 +96,7 @@ class AddOptionsConfiguration implements Helper_Interface_Filters {
 					'Select'      => esc_html__( 'Show all options for Select Fields', 'gravity-pdf-core-booster' ),
 					'Multiselect' => esc_html__( 'Show all options for Multiselect Fields', 'gravity-pdf-core-booster' ),
 				],
-				'tooltip' => '<h6>' . esc_html__( 'Help', 'gravity-forms-pdf-extended' ) . '</h6>' . sprintf( esc_html__( '', 'gravity-pdf-core-booster' ) ),
+				'tooltip' => '<h6>' . esc_html__( 'Show Field Options', 'gravity-forms-pdf-extended' ) . '</h6>' . esc_html__( 'Controls whether Select, Radio, Multiselect and Checkbox fields will show all available options with the selected items checked in the PDF.', 'gravity-pdf-core-booster' ),
 			];
 
 			$settings['option_label_or_value'] = [
@@ -109,27 +108,10 @@ class AddOptionsConfiguration implements Helper_Interface_Filters {
 					'Value' => esc_html__( 'Show Value', 'gravity-pdf-core-booster' ),
 				],
 				'std'     => 'Label',
-				'tooltip' => '<h6>' . esc_html__( 'Help', 'gravity-forms-pdf-extended' ) . '</h6>' . sprintf( esc_html__( '', 'gravity-pdf-core-booster' ) ),
+				'tooltip' => '<h6>' . esc_html__( 'Option Field Display', 'gravity-forms-pdf-extended' ) . '</h6>' . esc_html__( 'Controls whether Select, Radio, Multiselect and Checkbox fields will show the selected option label or value in the PDF.', 'gravity-pdf-core-booster' ),
 			];
 		}
 
 		return $settings;
-	}
-
-	/**
-	 * @return bool
-	 *
-	 * @since 1.0
-	 */
-	private function is_template_core_or_universal() {
-
-		$template_name = $this->form_settings->get_template_name_from_current_page();
-		$template_info = $this->templates->get_template_info_by_id( $template_name );
-
-		if ( $template_info['group'] === 'Core' || $template_info['group'] === 'Universal' ) {
-			return true;
-		}
-
-		return false;
 	}
 }

@@ -37,9 +37,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class DisplayAllOptions
+ * Class AddStyles
  *
- * @package GFPDF\Plugins\CoreBooster\Options
+ * @package GFPDF\Plugins\EnhancedOptions\Style
  */
 class AddStyles implements Helper_Interface_Actions {
 

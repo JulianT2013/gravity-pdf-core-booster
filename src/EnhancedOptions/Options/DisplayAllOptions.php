@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class DisplayAllOptions
  *
- * @package GFPDF\Plugins\CoreBooster\Options
+ * @package GFPDF\Plugins\CoreBooster\EnhancedLabels\Options
  */
 class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Filters {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Options;
+namespace GFPDF\Plugins\CoreBooster\EnhancedLabels\Options;
 
 use GFPDF\Helper\Helper_Interface_Actions;
 
@@ -37,11 +37,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class DisplayLabelOrValue
+ * Class DisplayFieldLabel
  *
  * @package GFPDF\Plugins\CoreBooster\EnhancedLabels\Options
  */
-class DisplayLabelOrValue implements Helper_Interface_Actions {
+class DisplayFieldLabel implements Helper_Interface_Actions {
+
+	protected $label_type;
 
 	/**
 	 * @since 1.0
@@ -67,16 +69,37 @@ class DisplayLabelOrValue implements Helper_Interface_Actions {
 	public function get_settings( $entry, $settings ) {
 		$settings = $settings['settings'];
 
-		if ( isset( $settings['option_label_or_value'] ) && $settings['option_label_or_value'] === 'Value' ) {
-			add_filter( 'gfpdf_show_field_value', [ $this, 'show_option_value' ] );
+		if ( isset( $settings['field_label_display'] ) && $settings['field_label_display'] !== 'Standard' ) {
+			$this->label_type = $settings['field_label_display'];
+			add_filter( 'gfpdf_field_label', [ $this, 'change_field_label_display' ], 10, 2 );
 		}
+	}
+
+	/**
+	 * @param $label
+	 * @param $field
+	 *
+	 * @since 1.0
+	 */
+	public function change_field_label_display( $label, $field ) {
+		switch ( $this->label_type ) {
+			case 'Admin':
+				return $field->adminLabel;
+			break;
+
+			case 'Admin Empty':
+				return ( strlen( $field->adminLabel ) === 0 ) ? $label : $field->adminLabel;
+			break;
+		}
+
+		return $label;
 	}
 
 	/**
 	 * @since 1.0
 	 */
 	public function reset_settings() {
-		remove_filter( 'gfpdf_show_field_value', [ $this, 'show_option_value' ] );
+		remove_filter( 'gfpdf_field_label', [ $this, 'change_field_label_display' ] );
 	}
 
 	/**
