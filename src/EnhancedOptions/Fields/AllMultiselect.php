@@ -69,8 +69,10 @@ class AllMultiselect extends Field_Multiselect {
 	}
 
 	/**
-	 * @param $option
-	 * @param $key
+	 * Generate the multiselect item markup for a single option
+	 *
+	 * @param array  $option The current option 'text' and 'value'
+	 * @param string $key
 	 *
 	 * @return string
 	 *
@@ -87,6 +89,8 @@ class AllMultiselect extends Field_Multiselect {
 	}
 
 	/**
+	 * Return an array of selection options 'value's
+	 *
 	 * @return array
 	 *
 	 * @since 1.0

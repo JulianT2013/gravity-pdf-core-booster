@@ -70,8 +70,10 @@ class AllSelect extends Field_Select {
 	}
 
 	/**
-	 * @param $option
-	 * @param $key
+	 * Generate the select item markup for a single option
+	 *
+	 * @param array  $option The current option 'text' and 'value'
+	 * @param string $key
 	 *
 	 * @return string
 	 *

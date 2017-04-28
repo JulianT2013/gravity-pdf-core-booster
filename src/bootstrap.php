@@ -61,7 +61,10 @@ require_once( __DIR__ . '/../vendor/autoload.php' );
 class Bootstrap extends Helper_Abstract_Licensing {
 
 	/**
-	 * @param array $classes
+	 * Initialise the plugin classes and pass them to our parent class to
+	 * handle the rest of the bootstrapping (licensing ect)
+	 *
+	 * @param array $classes An array of classes to store in our singleton
 	 *
 	 * @since 1.0
 	 */
@@ -83,6 +86,8 @@ class Bootstrap extends Helper_Abstract_Licensing {
 	}
 
 	/**
+	 * Check the plugin's license is active and initialise the EDD Updater
+	 *
 	 * @since 1.0
 	 */
 	public function plugin_updater() {

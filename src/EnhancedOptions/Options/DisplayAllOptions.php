@@ -51,9 +51,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Filters {
 
+	/**
+	 * @var array The current PDF Settings
+	 *
+	 * @since 1.0
+	 */
 	private $settings;
 
 	/**
+	 * Initialise our module
+	 *
 	 * @since 1.0
 	 */
 	public function init() {
@@ -77,6 +84,8 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	}
 
 	/**
+	 * Save the PDF Settings for later use
+	 *
 	 * @param array $entry
 	 * @param array $settings
 	 *
@@ -87,6 +96,8 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	}
 
 	/**
+	 * Get the current saved PDF settings
+	 *
 	 * @return array
 	 *
 	 * @since 1.0
@@ -96,6 +107,8 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	}
 
 	/**
+	 * Remove the current saved PDF Settings
+	 *
 	 * @since 1.0
 	 */
 	public function reset_settings() {
@@ -103,6 +116,9 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	}
 
 	/**
+	 * Check which settings are activate and render the radio/select/checkbox/multiselect fields with our
+	 * modified classes, if needed
+	 *
 	 * @param Helper_Abstract_Fields $class
 	 * @param object                 $field
 	 * @param array                  $entry

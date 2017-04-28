@@ -46,6 +46,8 @@ class AddFields implements Helper_Interface_Filters {
 
 	/**
 	 * @var DoesTemplateHaveGroup
+	 *
+	 * @since 1.0
 	 */
 	private $group_checker;
 
@@ -62,6 +64,8 @@ class AddFields implements Helper_Interface_Filters {
 
 
 	/**
+	 * Initialise our module
+	 *
 	 * @since 1.0
 	 */
 	public function init() {
@@ -76,6 +80,8 @@ class AddFields implements Helper_Interface_Filters {
 	}
 
 	/**
+	 * Include the field label settings for Core and Universal templates
+	 *
 	 * @param array $settings
 	 *
 	 * @return array

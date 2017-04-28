@@ -44,6 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AddStyles implements Helper_Interface_Actions {
 
 	/**
+	 * Initialise our module
+	 *
 	 * @since 1.0
 	 */
 	public function init() {
@@ -58,6 +60,8 @@ class AddStyles implements Helper_Interface_Actions {
 	}
 
 	/**
+	 * Include global CSS styles for Gravity PDF templates
+	 *
 	 * @since 1.0
 	 */
 	public function add_styles() {

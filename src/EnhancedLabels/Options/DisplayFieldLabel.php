@@ -43,9 +43,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class DisplayFieldLabel implements Helper_Interface_Actions {
 
+	/**
+	 * Holds the user selection for the 'field_label_display' setting
+	 *
+	 * @var string
+	 *
+	 * @since 1.0
+	 */
 	protected $label_type;
 
 	/**
+	 * Initialise our module
+	 *
 	 * @since 1.0
 	 */
 	public function init() {
@@ -61,6 +70,8 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	}
 
 	/**
+	 * If the 'field_label_display' setting isn't Standard add filter to change the label format
+	 *
 	 * @param array $entry
 	 * @param array $settings
 	 *
@@ -76,10 +87,14 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	}
 
 	/**
-	 * @param $label
-	 * @param $field
+	 * Alter the current field label if the 'field_label_display' setting is changed
+	 *
+	 * @param string $label
+	 * @param object $field
 	 *
 	 * @since 1.0
+	 *
+	 * @return string
 	 */
 	public function change_field_label_display( $label, $field ) {
 		switch ( $this->label_type ) {
@@ -96,6 +111,8 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	}
 
 	/**
+	 * Remove the filter that alters the field label
+	 *
 	 * @since 1.0
 	 */
 	public function reset_settings() {

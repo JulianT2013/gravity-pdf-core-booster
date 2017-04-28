@@ -44,6 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class DisplayLabelOrValue implements Helper_Interface_Actions {
 
 	/**
+	 * Initialise our module
+	 *
 	 * @since 1.0
 	 */
 	public function init() {
@@ -59,6 +61,8 @@ class DisplayLabelOrValue implements Helper_Interface_Actions {
 	}
 
 	/**
+	 * Apply our filter to show the option value if our saved setting value is correct
+	 *
 	 * @param array $entry
 	 * @param array $settings
 	 *
@@ -68,23 +72,16 @@ class DisplayLabelOrValue implements Helper_Interface_Actions {
 		$settings = $settings['settings'];
 
 		if ( isset( $settings['option_label_or_value'] ) && $settings['option_label_or_value'] === 'Value' ) {
-			add_filter( 'gfpdf_show_field_value', [ $this, 'show_option_value' ] );
+			add_filter( 'gfpdf_show_field_value', '__return_true' );
 		}
 	}
 
 	/**
-	 * @since 1.0
-	 */
-	public function reset_settings() {
-		remove_filter( 'gfpdf_show_field_value', [ $this, 'show_option_value' ] );
-	}
-
-	/**
-	 * @return bool
+	 * Remove the filter we added
 	 *
 	 * @since 1.0
 	 */
-	public function show_option_value() {
-		return true;
+	public function reset_settings() {
+		remove_filter( 'gfpdf_show_field_value', '__return_true' );
 	}
 }

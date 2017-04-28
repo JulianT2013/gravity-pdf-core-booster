@@ -69,8 +69,10 @@ class AllCheckbox extends Field_Checkbox {
 	}
 
 	/**
-	 * @param $option
-	 * @param $key
+	 * Generate the checkbox item markup for a single option
+	 *
+	 * @param array  $option The current option 'text' and 'value'
+	 * @param string $key
 	 *
 	 * @return string
 	 *
@@ -88,6 +90,8 @@ class AllCheckbox extends Field_Checkbox {
 	}
 
 	/**
+	 * Return an array of selection options 'value's
+	 *
 	 * @return array
 	 *
 	 * @since 1.0

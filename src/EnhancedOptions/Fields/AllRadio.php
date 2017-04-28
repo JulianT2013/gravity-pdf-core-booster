@@ -68,7 +68,8 @@ class AllRadio extends Field_Radio {
 			];
 		}
 
-		$html = '<ul class="checked radio radio-show-all-options">';
+		$field_choices = apply_filters( 'gfpdf_radio_field_choices', $field_choices, $this );
+		$html          = '<ul class="checked radio radio-show-all-options">';
 		foreach ( $field_choices as $key => $option ) {
 			$html .= $this->get_option_markup( $option, $key, $selected_item['value'] );
 		}
@@ -79,10 +80,12 @@ class AllRadio extends Field_Radio {
 	}
 
 	/**
+	 * Check if the selected value isn't on the list (i.e the "Other" option)
+	 *
 	 * @param array  $choices
 	 * @param string $selected
 	 *
-	 * @return bool
+	 * @return bool Returns true if the selection is an "Other" option, or false otherwise
 	 *
 	 * @since 1.0
 	 */
@@ -97,8 +100,10 @@ class AllRadio extends Field_Radio {
 	}
 
 	/**
-	 * @param $option
-	 * @param $key
+	 * Generate the radio item markup for a single option
+	 *
+	 * @param array  $option The current option 'text' and 'value'
+	 * @param string $key
 	 *
 	 * @return string
 	 *

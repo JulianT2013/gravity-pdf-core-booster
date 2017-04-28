@@ -32,15 +32,17 @@ class GPDF_Core_Booster_Checks {
 
 	/**
 	 * @var string
-     *
-     * @since 1.0
+	 *
+	 * @since 1.0
 	 */
 	private $required_gravitypdf_version = '4.1.1';
 
 	/**
-	 * @return null
-     *
-     * @since 1.0
+	 * Run our pre-checks and if it passes bootstrap the plugin
+	 *
+	 * @return void
+	 *
+	 * @since 1.0
 	 */
 	public function init() {
 
@@ -49,7 +51,7 @@ class GPDF_Core_Booster_Checks {
 
 		/* Check if any errors were thrown, enqueue them and exit early */
 		if ( sizeof( $this->notices ) > 0 ) {
-			add_action( 'admin_notices', array( $this, 'display_notices' ) );
+			add_action( 'admin_notices', [ $this, 'display_notices' ] );
 
 			return null;
 		}
@@ -58,9 +60,11 @@ class GPDF_Core_Booster_Checks {
 	}
 
 	/**
+	 * Check if the current version of Gravity PDF is compatible with this add-on
+	 *
 	 * @return bool
-     *
-     * @since 1.0
+	 *
+	 * @since 1.0
 	 */
 	public function check_gravitypdf_version() {
 
@@ -101,5 +105,5 @@ class GPDF_Core_Booster_Checks {
 }
 
 /* Initialise the software */
-$gravitypdf_core_booster= new GPDF_Core_Booster_Checks();
-add_action( 'gfpdf_fully_loaded', array( $gravitypdf_core_booster, 'init' ) );
+$gravitypdf_core_booster = new GPDF_Core_Booster_Checks();
+add_action( 'gfpdf_fully_loaded', [ $gravitypdf_core_booster, 'init' ] );
