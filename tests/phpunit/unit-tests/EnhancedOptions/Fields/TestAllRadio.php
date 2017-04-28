@@ -40,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestAllRadio
  *
- * @package GFPDF\Tests
+ * @package GFPDF\Tests\EnhancedOptions
  *
- * @group   fields
+ * @group   options
  */
 class TestAllRadio extends WP_UnitTestCase {
 

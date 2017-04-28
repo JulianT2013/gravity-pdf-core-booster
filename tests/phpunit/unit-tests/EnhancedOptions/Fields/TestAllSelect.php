@@ -40,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestAllSelect
  *
- * @package GFPDF\Tests
+ * @package GFPDF\Tests\EnhancedOptions
  *
- * @group   fields
+ * @group   options
  */
 class TestAllSelect extends WP_UnitTestCase {
 

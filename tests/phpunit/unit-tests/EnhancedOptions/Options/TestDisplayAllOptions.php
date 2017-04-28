@@ -40,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestDisplayAllOptions
  *
- * @package GFPDF\Tests
+ * @package GFPDF\Tests\EnhancedOptions
  *
- * @group   display-options
+ * @group   options
  */
 class TestDisplayAllOptions extends WP_UnitTestCase {
 

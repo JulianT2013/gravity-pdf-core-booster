@@ -40,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestAllCheckbox
  *
- * @package GFPDF\Tests
+ * @package GFPDF\Tests\EnhancedOptions
  *
- * @group   fields
+ * @group   options
  */
 class TestAllCheckbox extends WP_UnitTestCase {
 

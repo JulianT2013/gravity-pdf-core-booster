@@ -43,9 +43,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestAddFields
  *
- * @package GFPDF\Tests
+ * @package GFPDF\Tests\EnhancedOptions
  *
- * @group   add-options
+ * @group   options
  */
 class TestAddFields extends WP_UnitTestCase {
 

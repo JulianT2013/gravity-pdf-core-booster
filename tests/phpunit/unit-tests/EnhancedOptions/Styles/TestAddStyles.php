@@ -40,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestAddStyles
  *
- * @package GFPDF\Tests
+ * @package GFPDF\Tests\EnhancedOptions
  *
- * @group   add-styles
+ * @group   options
  */
 class TestAddStyles extends WP_UnitTestCase {
 

@@ -40,9 +40,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class TestDisplayLabelOrValue
  *
- * @package GFPDF\Tests
+ * @package GFPDF\Tests\EnhancedOptions
  *
- * @group   display-label-value
+ * @group   options
  */
 class TestDisplayLabelOrValue extends WP_UnitTestCase {
 
