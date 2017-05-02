@@ -2,7 +2,9 @@
     "name": "gravity-pdf/core-booster",
     "type": "project",
     "license": "GPLv2",
-    "require": {},
+    "require": {
+        "abeautifulsite/simpleimage": "^2.7"
+    },
 
     "config": {
         "preferred-install": "dist"

@@ -1,0 +1,20 @@
+.fileupload-non-image-container {
+    margin-bottom: 2mm;
+}
+
+.fileupload-images-container {
+    margin-top: 2mm;
+}
+
+.fileupload-images {
+    float: left;
+    width: 47%;
+    padding: 0 1.5% 3%;
+}
+
+.gf_left_half .fileupload-images,
+.gf_right_half .fileupload-images {
+    float: none;
+    width: 100%;
+    padding: 0 0 3mm;
+}
