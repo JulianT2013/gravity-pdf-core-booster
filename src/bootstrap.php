@@ -11,6 +11,8 @@ use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayLabelOrValue;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles\AddStyles;
 use GFPDF\Plugins\CoreBooster\FieldDescription\Options\AddFields as FieldDescriptionAddFields;
 use GFPDF\Plugins\CoreBooster\FieldDescription\Options\DisplayFieldDescription;
+use GFPDF\Plugins\CoreBooster\ProductTable\Options\AddFields as ProductTableAddFields;
+use GFPDF\Plugins\CoreBooster\ProductTable\Options\DisableProductTable;
 
 use GFPDF\Helper\Licensing\EDD_SL_Plugin_Updater;
 use GFPDF\Helper\Helper_Abstract_Licensing;
@@ -83,6 +85,8 @@ class Bootstrap extends Helper_Abstract_Licensing {
 			new AddStyles(),
 			new FieldDescriptionAddFields( $group_checker ),
 			new DisplayFieldDescription(),
+			new ProductTableAddFields( $group_checker ),
+			new DisableProductTable()
 		] );
 
 		/* Run the setup */
