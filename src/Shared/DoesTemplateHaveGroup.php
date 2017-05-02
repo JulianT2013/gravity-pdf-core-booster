@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class DoesTemplateHaveGroup
  *
- * @package GFPDF\Plugins\CoreBooster\Options
+ * @package GFPDF\Plugins\CoreBooster\Shared
  */
 class DoesTemplateHaveGroup {
 
