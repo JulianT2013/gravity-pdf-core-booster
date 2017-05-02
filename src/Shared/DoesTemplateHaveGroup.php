@@ -85,7 +85,7 @@ class DoesTemplateHaveGroup {
 		}
 
 		$template_info = $this->templates->get_template_info_by_id( $template_name );
-		if ( $template_info['group'] === 'Core' || $template_info['group'] === 'Universal' ) {
+		if ( $template_info['group'] === 'Core' || $template_info['group'] === 'Universal (Premium)' ) {
 			return true;
 		}
 
@@ -97,7 +97,7 @@ class DoesTemplateHaveGroup {
 	 *
 	 * @since 1.0
 	 */
-	private function get_template_name() {
+	public function get_template_name() {
 		if ( $this->ajax_template_request() ) {
 			return $_POST['template'];
 		}

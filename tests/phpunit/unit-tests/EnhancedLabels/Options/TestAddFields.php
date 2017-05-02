@@ -88,7 +88,7 @@ class TestAddFields extends WP_UnitTestCase {
 		         ->will(
 			         $this->returnValueMap( [
 					         [ 'zadani', [ 'group' => 'Core' ] ],
-					         [ 'sabre', [ 'group' => 'Universal' ] ],
+					         [ 'sabre', [ 'group' => 'Universal (Premium)' ] ],
 					         [ 'other', [ 'group' => 'Legacy' ] ],
 				         ]
 			         )

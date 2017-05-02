@@ -76,7 +76,7 @@ class TestAddFields extends WP_UnitTestCase {
 		);
 
 		$form_settings->method( 'get_template_name_from_current_page' )
-		              ->will( $this->onConsecutiveCalls( 'zadani', 'sabre', 'other' ) );
+		              ->will( $this->onConsecutiveCalls( 'zadani', 'zadani', 'sabre', 'sabre', 'other', 'other' ) );
 
 		$template = $this->getMock(
 			'\GFPDF\Helper\Helper_Templates',
@@ -88,7 +88,7 @@ class TestAddFields extends WP_UnitTestCase {
 		         ->will(
 			         $this->returnValueMap( [
 					         [ 'zadani', [ 'group' => 'Core' ] ],
-					         [ 'sabre', [ 'group' => 'Universal' ] ],
+					         [ 'sabre', [ 'group' => 'Universal (Premium)' ] ],
 					         [ 'other', [ 'group' => 'Legacy' ] ],
 				         ]
 			         )
