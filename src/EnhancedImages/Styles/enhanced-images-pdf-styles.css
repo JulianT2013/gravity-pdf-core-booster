@@ -13,8 +13,15 @@
 }
 
 .gf_left_half .fileupload-images,
-.gf_right_half .fileupload-images {
+.gf_right_half .fileupload-images,
+.gf_left_third .fileupload-images,
+.gf_middle_third .fileupload-images,
+.gf_right_third .fileupload-images,
+.gf_first_quarter .fileupload-images,
+.gf_second_quarter .fileupload-images,
+.gf_third_quarter .fileupload-images,
+.gf_fourth_quarter .fileupload-images {
     float: none;
     width: 100%;
-    padding: 0 0 3mm;
+    padding: 0 0 3%;
 }
