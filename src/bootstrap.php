@@ -16,7 +16,7 @@ use GFPDF\Plugins\CoreBooster\ProductTable\Options\AddFields as ProductTableAddF
 use GFPDF\Plugins\CoreBooster\ProductTable\Options\DisableProductTable;
 
 use GFPDF\Helper\Licensing\EDD_SL_Plugin_Updater;
-use GFPDF\Helper\Helper_Abstract_Licensing;
+use GFPDF\Helper\Helper_Abstract_Addon;
 use GFPDF\Helper\Helper_Singleton;
 
 use GPDFAPI;
@@ -63,7 +63,7 @@ require_once( __DIR__ . '/../vendor/autoload.php' );
  *
  * @package GFPDF\Plugins\CoreBooster
  */
-class Bootstrap extends Helper_Abstract_Licensing {
+class Bootstrap extends Helper_Abstract_Addon {
 
 	/**
 	 * Initialise the plugin classes and pass them to our parent class to
@@ -118,13 +118,15 @@ class Bootstrap extends Helper_Abstract_Licensing {
 				'beta'      => false,
 			]
 		);
+
+		$this->log->notice( sprintf( '%s plugin updater initialised', $this->get_name() ) );
 	}
 }
 
 /* Use the filter below to replace and extend our Bootstrap class if needed */
 $plugin = apply_filters( 'gfpdf_core_booster_initialise', new Bootstrap(
 	'gravity-pdf-core-booster',
-	'Core Booster Add-On',
+	'Gravity PDF Core Booster',
 	'Gravity PDF',
 	GFPDF_CORE_BOOSTER_VERSION,
 	GFPDF_CORE_BOOSTER_FILE,
