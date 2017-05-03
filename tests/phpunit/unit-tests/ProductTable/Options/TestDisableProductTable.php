@@ -5,7 +5,6 @@ namespace GFPDF\Tests\ProductTable;
 use GFPDF\Plugins\CoreBooster\ProductTable\Options\DisableProductTable;
 use WP_UnitTestCase;
 
-use GF_Fields;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -58,7 +57,7 @@ class TestDisableProductTable extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$this->class = new DisableProductTable();
+		$this->class = new DisableProductTable( $GLOBALS['GFPDF_Test']->log );
 		$this->class->init();
 	}
 

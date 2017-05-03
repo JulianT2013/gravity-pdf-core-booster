@@ -3,6 +3,7 @@
 namespace GFPDF\Tests\EnhancedLabels;
 
 use GFPDF\Plugins\CoreBooster\EnhancedLabels\Options\DisplayFieldLabel;
+
 use WP_UnitTestCase;
 
 use GF_Fields;
@@ -58,7 +59,7 @@ class TestDisplayFieldLabel extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$this->class = new DisplayFieldLabel();
+		$this->class = new DisplayFieldLabel( $GLOBALS['GFPDF_Test']->log );
 		$this->class->init();
 	}
 

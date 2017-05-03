@@ -23,6 +23,8 @@ class GravityPDF_Universal_Selector_Unit_Tests_Bootstrap {
 	/** @var string plugin directory */
 	public $plugin_dir;
 
+	public $log;
+
 	/**
 	 * Setup the unit testing environment
 	 *
@@ -58,6 +60,11 @@ class GravityPDF_Universal_Selector_Unit_Tests_Bootstrap {
 		( function_exists( 'gf_upgrade' ) ) ? gf_upgrade()->maybe_upgrade() : @GFForms::setup( true );
 
 		require $this->plugin_dir . '/gravity-pdf-core-booster.php';
+
+		/* Setup testing logger */
+		require $this->plugin_dir . '/tmp/gravity-forms-pdf-extended/vendor/autoload.php';
+		$this->log = new \Monolog\Logger( 'test' );
+		$this->log->pushHandler( new \Monolog\Handler\NullHandler( \Monolog\Logger::INFO ) ); /* throw logs away */
 	}
 }
 

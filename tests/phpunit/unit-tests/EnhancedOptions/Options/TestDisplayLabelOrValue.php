@@ -3,6 +3,7 @@
 namespace GFPDF\Tests\EnhancedOptions;
 
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayLabelOrValue;
+
 use WP_UnitTestCase;
 
 /**
@@ -56,7 +57,7 @@ class TestDisplayLabelOrValue extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$this->class = new DisplayLabelOrValue();
+		$this->class = new DisplayLabelOrValue( $GLOBALS['GFPDF_Test']->log );
 		$this->class->init();
 	}
 

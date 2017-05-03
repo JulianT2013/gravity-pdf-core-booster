@@ -58,7 +58,7 @@ class TestDisplayFieldLabel extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$this->class = new DisplayFieldDescription();
+		$this->class = new DisplayFieldDescription( $GLOBALS['GFPDF_Test']->log );
 		$this->class->init();
 	}
 

@@ -3,6 +3,7 @@
 namespace GFPDF\Tests\EnhancedOptions;
 
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles\AddStyles;
+
 use WP_UnitTestCase;
 
 /**
@@ -56,7 +57,7 @@ class TestAddStyles extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$this->class = new AddStyles();
+		$this->class = new AddStyles( $GLOBALS['GFPDF_Test']->log );
 		$this->class->init();
 	}
 

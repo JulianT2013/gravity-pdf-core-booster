@@ -94,7 +94,7 @@ class TestAddFields extends WP_UnitTestCase {
 			         )
 		         );
 
-		$this->class = new AddFields( new DoesTemplateHaveGroup( $form_settings, $template ) );
+		$this->class = new AddFields( new DoesTemplateHaveGroup( $form_settings, $template, $GLOBALS['GFPDF_Test']->log ), $GLOBALS['GFPDF_Test']->log );
 		$this->class->init();
 	}
 

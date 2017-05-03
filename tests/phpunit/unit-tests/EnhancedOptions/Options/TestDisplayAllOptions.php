@@ -3,6 +3,7 @@
 namespace GFPDF\Tests\EnhancedOptions;
 
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\DisplayAllOptions;
+
 use WP_UnitTestCase;
 
 /**
@@ -56,7 +57,7 @@ class TestDisplayAllOptions extends WP_UnitTestCase {
 	 * @since 1.0
 	 */
 	public function setUp() {
-		$this->class = new DisplayAllOptions();
+		$this->class = new DisplayAllOptions( $GLOBALS['GFPDF_Test']->log );
 		$this->class->init();
 	}
 
