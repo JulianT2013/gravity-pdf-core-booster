@@ -3,6 +3,7 @@
 namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Options;
 
 use GFPDF\Helper\Helper_Interface_Actions;
+use Monolog\Logger;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -44,6 +45,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 class DisplayLabelOrValue implements Helper_Interface_Actions {
 
 	/**
+	 * Holds our log class
+	 *
+	 * @var \Monolog\Logger
+	 *
+	 * @since 1.0
+	 */
+	protected $log;
+
+	/**
+	 * DisplayLabelOrValue constructor.
+	 *
+	 * @param Logger $log
+	 *
+	 * @since 1.0
+	 */
+	public function __construct( Logger $log ) {
+		$this->log = $log;
+	}
+
+	/**
 	 * Initialise our module
 	 *
 	 * @since 1.0
@@ -72,6 +93,8 @@ class DisplayLabelOrValue implements Helper_Interface_Actions {
 		$settings = $settings['settings'];
 
 		if ( isset( $settings['option_label_or_value'] ) && $settings['option_label_or_value'] === 'Value' ) {
+			$this->log->notice( 'Show field value instead of label in PDF' );
+
 			add_filter( 'gfpdf_show_field_value', '__return_true' );
 		}
 	}

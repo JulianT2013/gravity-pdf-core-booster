@@ -4,6 +4,7 @@ namespace GFPDF\Plugins\CoreBooster\ProductTable\Options;
 
 use GFPDF\Plugins\CoreBooster\Shared\DoesTemplateHaveGroup;
 use GFPDF\Helper\Helper_Interface_Filters;
+use Monolog\Logger;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -52,14 +53,25 @@ class AddFields implements Helper_Interface_Filters {
 	private $group_checker;
 
 	/**
-	 * AddFields constructor.
+	 * Holds our log class
 	 *
-	 * @param DoesTemplateHaveGroup $group_checker
+	 * @var \Monolog\Logger
 	 *
 	 * @since 1.0
 	 */
-	public function __construct( DoesTemplateHaveGroup $group_checker ) {
+	protected $log;
+
+	/**
+	 * AddFields constructor.
+	 *
+	 * @param DoesTemplateHaveGroup $group_checker
+	 * @param Logger                $log
+	 *
+	 * @since 1.0
+	 */
+	public function __construct( DoesTemplateHaveGroup $group_checker, Logger $log ) {
 		$this->group_checker = $group_checker;
+		$this->log           = $log;
 	}
 
 
@@ -105,6 +117,8 @@ class AddFields implements Helper_Interface_Filters {
 				'std'     => 'Yes',
 				'tooltip' => '<h6>' . esc_html__( 'Group Products?', 'gravity-pdf-core-booster' ) . '</h6>' . esc_html__( 'When enabled, your product fields are all grouped at the end of the PDF in a formatted table (like the Gravity Forms entry details page).', 'gravity-pdf-core-booster' ),
 			];
+
+			$this->log->notice( 'Add "group_product_fields" field to settings' );
 		}
 
 		return $settings;

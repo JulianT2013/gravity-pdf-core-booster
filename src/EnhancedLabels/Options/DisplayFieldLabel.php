@@ -3,6 +3,7 @@
 namespace GFPDF\Plugins\CoreBooster\EnhancedLabels\Options;
 
 use GFPDF\Helper\Helper_Interface_Actions;
+use Monolog\Logger;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -53,6 +54,27 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	protected $label_type;
 
 	/**
+	 * Holds our log class
+	 *
+	 * @var \Monolog\Logger
+	 *
+	 * @since 1.0
+	 */
+	protected $log;
+
+	/**
+	 * DisplayFieldLabel constructor.
+	 *
+	 * @param Logger $log
+	 *
+	 * @since 1.0
+	 */
+	public function __construct( Logger $log ) {
+		$this->log = $log;
+	}
+
+
+	/**
 	 * Initialise our module
 	 *
 	 * @since 1.0
@@ -99,10 +121,12 @@ class DisplayFieldLabel implements Helper_Interface_Actions {
 	public function change_field_label_display( $label, $field ) {
 		switch ( $this->label_type ) {
 			case 'Admin':
+				$this->log->notice( 'Show admin field label in PDFs', [ 'f_id' => $field->id, 'f_label' => $field->label, 'f_admin_label' => $field->adminLabel ] );
 				return $field->adminLabel;
 			break;
 
 			case 'Admin Empty':
+				$this->log->notice( 'Show admin field label in PDFs if not empty', [ 'f_id' => $field->id, 'f_label' => $field->label, 'f_admin_label' => $field->adminLabel ] );
 				return ( strlen( $field->adminLabel ) === 0 ) ? $label : $field->adminLabel;
 			break;
 		}

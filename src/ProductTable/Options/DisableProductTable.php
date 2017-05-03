@@ -3,6 +3,7 @@
 namespace GFPDF\Plugins\CoreBooster\ProductTable\Options;
 
 use GFPDF\Helper\Helper_Interface_Actions;
+use Monolog\Logger;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -44,6 +45,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 class DisableProductTable implements Helper_Interface_Actions {
 
 	/**
+	 * Holds our log class
+	 *
+	 * @var \Monolog\Logger
+	 *
+	 * @since 1.0
+	 */
+	protected $log;
+
+	/**
+	 * DisableProductTable constructor.
+	 *
+	 * @param Logger $log
+	 *
+	 * @since 1.0
+	 */
+	public function __construct( Logger $log ) {
+		$this->log = $log;
+	}
+
+	/**
 	 * Initialise our module
 	 *
 	 * @since 1.0
@@ -72,6 +93,8 @@ class DisableProductTable implements Helper_Interface_Actions {
 		$settings = $settings['settings'];
 
 		if ( isset( $settings['group_product_fields'] ) && $settings['group_product_fields'] === 'No' ) {
+			$this->log->notice( 'Disable product table in PDF' );
+
 			add_filter( 'gfpdf_pdf_configuration', [ $this, 'disable_product_table' ] );
 		}
 	}

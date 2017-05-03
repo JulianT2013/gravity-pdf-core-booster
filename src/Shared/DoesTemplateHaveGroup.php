@@ -4,6 +4,7 @@ namespace GFPDF\Plugins\CoreBooster\Shared;
 
 use GFPDF\Helper\Helper_Templates;
 use GFPDF\Model\Model_Form_Settings;
+use Monolog\Logger;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -59,16 +60,27 @@ class DoesTemplateHaveGroup {
 	private $templates;
 
 	/**
+	 * Holds our log class
+	 *
+	 * @var \Monolog\Logger
+	 *
+	 * @since 1.0
+	 */
+	protected $log;
+
+	/**
 	 * AddFields constructor.
 	 *
 	 * @param Model_Form_Settings $form_settings
 	 * @param Helper_Templates    $templates
+	 * @param \Monolog\Logger $log
 	 *
 	 * @since 1.0
 	 */
-	public function __construct( Model_Form_Settings $form_settings, Helper_Templates $templates ) {
+	public function __construct( Model_Form_Settings $form_settings, Helper_Templates $templates, Logger $log ) {
 		$this->form_settings = $form_settings;
 		$this->templates     = $templates;
+		$this->log           = $log;
 	}
 
 	/**
@@ -86,6 +98,8 @@ class DoesTemplateHaveGroup {
 
 		$template_info = $this->templates->get_template_info_by_id( $template_name );
 		if ( $template_info['group'] === 'Core' || $template_info['group'] === 'Universal (Premium)' ) {
+			$this->log->notice( 'The PDF Template is in a core or universal group.', $template_info );
+
 			return true;
 		}
 
@@ -99,6 +113,8 @@ class DoesTemplateHaveGroup {
 	 */
 	public function get_template_name() {
 		if ( $this->ajax_template_request() ) {
+			$this->log->notice( 'The template name was retreived from POST data', $_POST );
+
 			return $_POST['template'];
 		}
 

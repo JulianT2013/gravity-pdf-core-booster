@@ -3,6 +3,7 @@
 namespace GFPDF\Plugins\CoreBooster\EnhancedOptions\Styles;
 
 use GFPDF\Helper\Helper_Interface_Actions;
+use Monolog\Logger;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -44,6 +45,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AddStyles implements Helper_Interface_Actions {
 
 	/**
+	 * Holds our log class
+	 *
+	 * @var \Monolog\Logger
+	 *
+	 * @since 1.0
+	 */
+	protected $log;
+
+	/**
+	 * AddStyles constructor.
+	 *
+	 * @param Logger $log
+	 *
+	 * @since 1.0
+	 */
+	public function __construct( Logger $log ) {
+		$this->log = $log;
+	}
+
+	/**
 	 * Initialise our module
 	 *
 	 * @since 1.0
@@ -65,6 +86,8 @@ class AddStyles implements Helper_Interface_Actions {
 	 * @since 1.0
 	 */
 	public function add_styles() {
+		$this->log->notice( 'Include Global PDF CSS for Enhanced Options' );
+
 		echo '<style>' .
 		     file_get_contents( __DIR__ . '/enhanced-option-selector-pdf-styles.css' ) .
 		     '</style>';

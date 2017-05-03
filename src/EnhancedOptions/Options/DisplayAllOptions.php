@@ -9,6 +9,7 @@ use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllCheckbox;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllMultiselect;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllRadio;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllSelect;
+use Monolog\Logger;
 
 use GPDFAPI;
 
@@ -57,6 +58,26 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	 * @since 1.0
 	 */
 	private $settings;
+
+	/**
+	 * Holds our log class
+	 *
+	 * @var \Monolog\Logger
+	 *
+	 * @since 1.0
+	 */
+	protected $log;
+
+	/**
+	 * DisplayAllOptions constructor.
+	 *
+	 * @param Logger $log
+	 *
+	 * @since 1.0
+	 */
+	public function __construct( Logger $log ) {
+		$this->log = $log;
+	}
 
 	/**
 	 * Initialise our module
@@ -134,18 +155,22 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 			$option_config = $this->settings['show_all_options'];
 
 			if ( $field->type === 'radio' && isset( $option_config['Radio'] ) ) {
+				$this->log->notice( 'Override Radio field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
 				return new AllRadio( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 
 			if ( $field->type === 'select' && isset( $option_config['Select'] ) ) {
+				$this->log->notice( 'Override Select field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
 				return new AllSelect( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 
 			if ( $field->type === 'checkbox' && isset( $option_config['Checkbox'] ) ) {
+				$this->log->notice( 'Override Checkbox field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
 				return new AllCheckbox( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 
 			if ( $field->type === 'multiselect' && isset( $option_config['Multiselect'] ) ) {
+				$this->log->notice( 'Override Multiselect field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
 				return new AllMultiselect( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 			}
 		}

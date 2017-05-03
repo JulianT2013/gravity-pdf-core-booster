@@ -4,6 +4,7 @@ namespace GFPDF\Plugins\CoreBooster\FieldDescription\Options;
 
 use GFPDF\Plugins\CoreBooster\Shared\DoesTemplateHaveGroup;
 use GFPDF\Helper\Helper_Interface_Filters;
+use Monolog\Logger;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -52,14 +53,25 @@ class AddFields implements Helper_Interface_Filters {
 	private $group_checker;
 
 	/**
-	 * AddFields constructor.
+	 * Holds our log class
 	 *
-	 * @param DoesTemplateHaveGroup $group_checker
+	 * @var \Monolog\Logger
 	 *
 	 * @since 1.0
 	 */
-	public function __construct( DoesTemplateHaveGroup $group_checker ) {
+	protected $log;
+
+	/**
+	 * AddFields constructor.
+	 *
+	 * @param DoesTemplateHaveGroup $group_checker
+	 * @param Logger                $log
+	 *
+	 * @since 1.0
+	 */
+	public function __construct( DoesTemplateHaveGroup $group_checker, Logger $log ) {
 		$this->group_checker = $group_checker;
+		$this->log           = $log;
 	}
 
 
@@ -104,6 +116,8 @@ class AddFields implements Helper_Interface_Filters {
 				'std'     => 'No',
 				'tooltip' => '<h6>' . esc_html__( 'Show Field Description', 'gravity-pdf-core-booster' ) . '</h6>' . esc_html__( 'When enabled, the field description will be displayed in the PDF. The description is placed above or below the user response, depending on the "Description placement" option found in Form Settings.', 'gravity-pdf-core-booster' ),
 			];
+
+			$this->log->notice( 'Add "include_field_description" field to settings' );
 		}
 
 		return $settings;

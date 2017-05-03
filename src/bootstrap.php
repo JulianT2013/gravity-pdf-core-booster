@@ -3,7 +3,6 @@
 namespace GFPDF\Plugins\CoreBooster;
 
 use GFPDF\Plugins\CoreBooster\Shared\DoesTemplateHaveGroup;
-use GFPDF\Plugins\CoreBooster\Shared\ImageInfo;
 use GFPDF\Plugins\CoreBooster\EnhancedLabels\Options\AddFields as LabelsAddFields;
 use GFPDF\Plugins\CoreBooster\EnhancedLabels\Options\DisplayFieldLabel;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Options\AddFields as OptionsAddFields;
@@ -74,20 +73,22 @@ class Bootstrap extends Helper_Abstract_Addon {
 	 * @since 1.0
 	 */
 	public function init( $classes = [] ) {
+		$this->setup_logger();
+
 		/* Create new intances of the plugin's classes */
-		$group_checker = new DoesTemplateHaveGroup( GPDFAPI::get_mvc_class( 'Model_Form_Settings' ), GPDFAPI::get_templates_class() );
+		$group_checker = new DoesTemplateHaveGroup( GPDFAPI::get_mvc_class( 'Model_Form_Settings' ), GPDFAPI::get_templates_class(), $this->log );
 
 		$classes = array_merge( $classes, [
-			new LabelsAddFields( $group_checker ),
-			new DisplayFieldLabel(),
-			new OptionsAddFields( $group_checker ),
-			new DisplayAllOptions(),
-			new DisplayLabelOrValue(),
-			new OptionsAddStyles(),
-			new FieldDescriptionAddFields( $group_checker ),
-			new DisplayFieldDescription(),
-			new ProductTableAddFields( $group_checker ),
-			new DisableProductTable(),
+			new LabelsAddFields( $group_checker, $this->log ),
+			new DisplayFieldLabel( $this->log ),
+			new OptionsAddFields( $group_checker, $this->log ),
+			new DisplayAllOptions( $this->log ),
+			new DisplayLabelOrValue( $this->log ),
+			new OptionsAddStyles( $this->log ),
+			new FieldDescriptionAddFields( $group_checker, $this->log ),
+			new DisplayFieldDescription( $this->log ),
+			new ProductTableAddFields( $group_checker, $this->log ),
+			new DisableProductTable( $this->log ),
 		] );
 
 		/* Run the setup */
