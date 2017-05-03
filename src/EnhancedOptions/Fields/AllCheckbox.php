@@ -9,7 +9,7 @@ use GFPDF\Helper\Helper_Abstract_Fields;
  * Gravity Forms Field
  *
  * @package     Gravity PDF
- * @copyright   Copyright (c) 2016, Blue Liquid Designs
+ * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0
  */
@@ -20,9 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /*
-    This file is part of Gravity PDF.
+    This file is part of Gravity PDF Core Booster.
 
-    Gravity PDF – Copyright (C) 2017, Blue Liquid Designs
+    Copyright (C) 2017, Blue Liquid Designs
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
