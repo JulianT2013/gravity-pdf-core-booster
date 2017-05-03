@@ -1,8 +1,9 @@
 <?php
 
-namespace GFPDF\Plugins\CoreBooster\Shared;
+namespace GFPDF\Tests\EnhancedImages;
 
-use GFFormsModel;
+use GFPDF\Plugins\CoreBooster\EnhancedImages\Styles\AddStyles;
+use WP_UnitTestCase;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -19,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
     This file is part of Gravity PDF.
 
-    Gravity PDF – Copyright (C) 2017, Blue Liquid Designs
+    Gravity PDF – Copyright (C) 2016, Blue Liquid Designs
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,56 +38,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class ImageInfo
+ * Class TestAddStyles
  *
- * @package GFPDF\Plugins\CoreBooster\Shared
+ * @package GFPDF\Tests\EnhancedImages
+ *
+ * @group   images
  */
-class ImageInfo {
+class TestAddStyles extends WP_UnitTestCase {
 
 	/**
-	 * @param string $path
-	 *
-	 * @return string
-	 *
+	 * @var AddStyles
 	 * @since 1.0
 	 */
-	public function get_image_resized_filepath( $path ) {
-
-		$file_info = pathinfo( $path );
-
-		/* Handle both absolute paths and file streams (i.e vfs://path/to/image.jpg) */
-		$dirname = $file_info['dirname'];
-		$dirname .= ( substr( $path, 0, strlen( $file_info['dirname'] ) + 2 ) === substr( $file_info['dirname'], 0, -1 ) . '://' ) ? '//' : '/';
-
-		return $dirname . $file_info['filename'] . '-pdf-resized.' . $file_info['extension'];
-	}
-
+	private $class;
 
 	/**
-	 * @param string $path
-	 *
-	 * @return bool
-	 *
 	 * @since 1.0
 	 */
-	public function does_file_have_image_extension( $path ) {
-		$allowed_extensions = [ 'jpg', 'jpeg', 'gif', 'png' ];
-
-		if ( in_array( strtolower( pathinfo( $path, PATHINFO_EXTENSION ) ), $allowed_extensions ) ) {
-			return true;
-		}
-
-		return false;
+	public function setUp() {
+		$this->class = new AddStyles();
+		$this->class->init();
 	}
 
 	/**
-	 * @param $url
-	 *
-	 * @return string
-	 *
 	 * @since 1.0
 	 */
-	public function get_file_path( $url ) {
-		return GFFormsModel::get_physical_file_path( $url );
+	public function test_add_actions() {
+		$this->assertEquals( 10, has_action( 'gfpdf_core_template', [
+			$this->class,
+			'add_styles',
+		] ) );
+	}
+
+	/**
+	 * @since 1.0
+	 */
+	public function test_add_styles() {
+		ob_start();
+		$this->class->add_styles();
+		$results = ob_get_clean();
+
+		$this->assertNotFalse( strpos( $results, '.fileupload-non-image-container' ) );
 	}
 }

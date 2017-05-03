@@ -152,7 +152,7 @@ class ImageUploads extends Field_Fileupload {
 	 * @since 1.0
 	 */
 	public function get_image_html( $uploads ) {
-		if ( count( $uploads ) == 0 ) {
+		if ( count( $uploads ) === 0 ) {
 			return '';
 		}
 
@@ -161,11 +161,20 @@ class ImageUploads extends Field_Fileupload {
         <div class="fileupload-images-container">
 			<?php foreach ( $uploads as $i => $file ):
 				$path = $this->misc->convert_url_to_path( $file );
-                $resized_image = $this->image_info->get_image_resized_filepath( $path ); ?>
+                $resized_image = ( $path !== false ) ? $this->image_info->get_image_resized_filepath( $path ) : false;
+
+                if( is_file( $resized_image ) ) {
+                    $img_string = $resized_image;
+                } elseif( $path ) {
+	                $img_string = $path;
+                } else {
+                    $img_string = $file;
+                }
+                ?>
 
                 <div id="field-<?php echo $this->field->id; ?>-image-option-<?php echo $i; ?>" class="fileupload-images">
                     <a href="<?php echo esc_url( $file ); ?>">
-                        <img src="<?php echo ( is_file( $resized_image ) ) ? $resized_image : $path; ?>"/>
+                        <img src="<?php echo $img_string; ?>"/>
                     </a>
                 </div>
 			<?php endforeach; ?>

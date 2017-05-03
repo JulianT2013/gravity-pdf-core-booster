@@ -90,9 +90,10 @@ class AddFields implements Helper_Interface_Filters {
 	 */
 	public function add_template_option( $settings ) {
 
-		$override = apply_filters( 'gfpdf_override_enhanced_images_fields', false, $settings ); /* Change this to true to override the core / universal check */
+		$override          = apply_filters( 'gfpdf_override_enhanced_images_fields', false, $settings ); /* Change this to true to override the core / universal check */
+		$exclude_templates = apply_filters( 'gfpdf_excluded_templates', [ 'gpdf-cellulose' ], $settings, 'product-field' ); /* Exclude this option for specific templates */
 
-		if ( $override || $this->group_checker->has_group() ) {
+		if ( ! in_array( $this->group_checker->get_template_name(), $exclude_templates ) && ( $override || $this->group_checker->has_group() ) ) {
 			$settings['display_uploaded_images'] = [
 				'id'      => 'display_uploaded_images',
 				'name'    => esc_html__( 'Display Uploaded Images', 'gravity-pdf-core-booster' ),
