@@ -14,10 +14,6 @@ use GFPDF\Plugins\CoreBooster\FieldDescription\Options\AddFields as FieldDescrip
 use GFPDF\Plugins\CoreBooster\FieldDescription\Options\DisplayFieldDescription;
 use GFPDF\Plugins\CoreBooster\ProductTable\Options\AddFields as ProductTableAddFields;
 use GFPDF\Plugins\CoreBooster\ProductTable\Options\DisableProductTable;
-use GFPDF\Plugins\CoreBooster\EnhancedImages\Options\AddFields as EnhancedImagesAddFields;
-use GFPDF\Plugins\CoreBooster\EnhancedImages\ImageManipulation\Resize;
-use GFPDF\Plugins\CoreBooster\EnhancedImages\Options\DisplayImages;
-use GFPDF\Plugins\CoreBooster\EnhancedImages\Styles\AddStyles as ImagesAddStyles;
 
 use GFPDF\Helper\Licensing\EDD_SL_Plugin_Updater;
 use GFPDF\Helper\Helper_Abstract_Licensing;
@@ -92,10 +88,6 @@ class Bootstrap extends Helper_Abstract_Licensing {
 			new DisplayFieldDescription(),
 			new ProductTableAddFields( $group_checker ),
 			new DisableProductTable(),
-			new EnhancedImagesAddFields( $group_checker ),
-			new Resize( new ImageInfo() ),
-			new DisplayImages( new ImageInfo() ),
-			new ImagesAddStyles()
 		] );
 
 		/* Run the setup */
