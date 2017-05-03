@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @package GFPDF\Tests\ProductTable
  *
- * @group   description
+ * @group   producttable
  */
 class TestAddFields extends WP_UnitTestCase {
 

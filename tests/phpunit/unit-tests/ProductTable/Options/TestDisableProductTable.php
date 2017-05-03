@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @package GFPDF\Tests\EnhancedLabels
  *
- * @group   labels
+ * @group   producttable
  */
 class TestDisableProductTable extends WP_UnitTestCase {
 

@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @package GFPDF\Tests\EnhancedLabels
  *
- * @group   labels
+ * @group   description
  */
 class TestDisplayFieldLabel extends WP_UnitTestCase {
 
