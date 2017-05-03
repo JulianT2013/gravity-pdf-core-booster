@@ -102,7 +102,7 @@ class AddFields implements Helper_Interface_Filters {
 					'No'  => esc_html__( 'No', 'gravity-pdf-core-booster' ),
 				],
 				'std'     => 'No',
-				'tooltip' => '<h6>' . esc_html__( 'Display Uploaded Images', 'gravity-pdf-core-booster' ) . '</h6>' . sprintf( esc_html__( 'When enabled, uploaded images will be displayed in the PDF using a two column layout.', 'gravity-pdf-core-booster' ), '<code>', '</code>' ),
+				'tooltip' => '<h6>' . esc_html__( 'Display Uploaded Images', 'gravity-pdf-core-booster' ) . '</h6>' . sprintf( esc_html__( 'When enabled, uploaded images will be displayed in the PDF using a two column layout. If the upload field is included in a column using CSS Ready Classes the images will be stacked instead.', 'gravity-pdf-core-booster' ), '<code>', '</code>' ),
 			];
 		}
 
