@@ -17,6 +17,8 @@ use GFPDF\Plugins\CoreBooster\ProductTable\Options\DisableProductTable;
 use GFPDF\Helper\Licensing\EDD_SL_Plugin_Updater;
 use GFPDF\Helper\Helper_Abstract_Addon;
 use GFPDF\Helper\Helper_Singleton;
+use GFPDF\Helper\Helper_Logger;
+use GFPDF\Helper\Helper_Notices;
 
 use GPDFAPI;
 
@@ -73,8 +75,6 @@ class Bootstrap extends Helper_Abstract_Addon {
 	 * @since 1.0
 	 */
 	public function init( $classes = [] ) {
-		$this->setup_logger();
-
 		/* Create new intances of the plugin's classes */
 		$group_checker = new DoesTemplateHaveGroup( GPDFAPI::get_mvc_class( 'Model_Form_Settings' ), GPDFAPI::get_templates_class(), $this->log );
 
@@ -125,15 +125,20 @@ class Bootstrap extends Helper_Abstract_Addon {
 }
 
 /* Use the filter below to replace and extend our Bootstrap class if needed */
+$name = 'Gravity PDF Core Booster';
+$slug = 'gravity-pdf-core-booster';
+
 $plugin = apply_filters( 'gfpdf_core_booster_initialise', new Bootstrap(
-	'gravity-pdf-core-booster',
-	'Gravity PDF Core Booster',
+	$slug,
+	$name,
 	'Gravity PDF',
 	GFPDF_CORE_BOOSTER_VERSION,
 	GFPDF_CORE_BOOSTER_FILE,
 	GPDFAPI::get_data_class(),
 	GPDFAPI::get_options_class(),
-	new Helper_Singleton()
+	new Helper_Singleton(),
+	new Helper_Logger( $slug, $name ),
+	new Helper_Notices()
 ) );
 
 $plugin->init();
