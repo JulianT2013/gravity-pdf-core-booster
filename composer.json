@@ -3,7 +3,7 @@
     "type": "project",
     "license": "GPLv2",
     "require": {
-        "abeautifulsite/simpleimage": "^2.7"
+
     },
 
     "config": {
