@@ -9,7 +9,7 @@ If you are using the plugin on a live site, please purchase a valid license from
 
 # About
 
-This Git repository is for developers who want to contribute to Gravity PDF Core Booster. **Don't use it in production**. For production use, [purchase a license and install the packaged version from our online store](#).
+This Git repository is for developers who want to contribute to Gravity PDF Core Booster. **Don't use it in production**. For production use, [purchase a license and install the packaged version from our online store](https://gravitypdf.com/shop/core-booster-add-on/).
 
 The `development` branch is considered our bleeding edge branch, with all new changes pushed to it. The `master` branch is our latest stable version of Gravity PDF Core Booster.
 
