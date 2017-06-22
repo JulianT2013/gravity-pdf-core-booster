@@ -7,11 +7,10 @@ use GFPDF\Helper\Helper_Interface_Actions;
 use GFPDF\Helper\Helper_Interface_Filters;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllCheckbox;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllMultiselect;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllProductOptions;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllRadio;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllSelect;
 use Monolog\Logger;
-
-use GPDFAPI;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -154,24 +153,53 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 		if ( isset( $this->settings['show_all_options'] ) && is_array( $this->settings['show_all_options'] ) ) {
 			$option_config = $this->settings['show_all_options'];
 
+			/*
+			 * Override Radio field HTML processing if configured to do so
+			 */
 			if ( $field->type === 'radio' && isset( $option_config['Radio'] ) ) {
-				$this->log->notice( 'Override Radio field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
-				return new AllRadio( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				$this->log->notice( 'Override Radio field generator class', [
+					'f_id'    => $field->id,
+					'f_label' => $field->label,
+				] );
+
+				return new AllRadio( $field, $entry, $class->gform, $class->misc );
 			}
 
+			/*
+			 * Override Select field HTML processing if configured to do so
+			 */
 			if ( $field->type === 'select' && isset( $option_config['Select'] ) ) {
-				$this->log->notice( 'Override Select field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
-				return new AllSelect( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				$this->log->notice( 'Override Select field generator class', [
+					'f_id'    => $field->id,
+					'f_label' => $field->label,
+				] );
+
+				return new AllSelect( $field, $entry, $class->gform, $class->misc );
 			}
 
+			/*
+			 * Override Checkbox field HTML processing if configured to do so
+			 */
 			if ( $field->type === 'checkbox' && isset( $option_config['Checkbox'] ) ) {
-				$this->log->notice( 'Override Checkbox field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
-				return new AllCheckbox( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				$this->log->notice( 'Override Checkbox field generator class', [
+					'f_id'    => $field->id,
+					'f_label' => $field->label,
+				] );
+
+				return new AllCheckbox( $field, $entry, $class->gform, $class->misc );
 			}
 
+			/*
+			 * Override Multiselect field HTML processing if configured to do so
+			 */
 			if ( $field->type === 'multiselect' && isset( $option_config['Multiselect'] ) ) {
-				$this->log->notice( 'Override Multiselect field generator class', [ 'f_id' => $field->id, 'f_label' => $field->label ] );
-				return new AllMultiselect( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+				$this->log->notice(
+					'Override Multiselect field generator class', [
+					'f_id'    => $field->id,
+					'f_label' => $field->label,
+				] );
+
+				return new AllMultiselect( $field, $entry, $class->gform, $class->misc );
 			}
 		}
 
