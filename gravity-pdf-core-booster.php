@@ -3,16 +3,16 @@
 /**
  * Plugin Name:     Gravity PDF Core Booster
  * Plugin URI:      https://gravitypdf.com/shop/core-booster-add-on/
- * Description:     PLUGIN DESCRIPTION HERE
+ * Description:     Giving you greater control over the appearance of Core and Universal PDF templates for Gravity PDF.
  * Author:          Gravity PDF
  * Author URI:      https://gravitypdf.com
  * Text Domain:     gravity-pdf-core-booster
  * Domain Path:     /languages
- * Version:         1.0
+ * Version:         0.1
  */
 
 define( 'GFPDF_CORE_BOOSTER_FILE', __FILE__ );
-define( 'GFPDF_CORE_BOOSTER_VERSION', '1.0' );
+define( 'GFPDF_CORE_BOOSTER_VERSION', '0.1' );
 
 /**
  * Class GPDF_Core_Booster_Checks
