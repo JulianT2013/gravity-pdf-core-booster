@@ -78,6 +78,7 @@ class Bootstrap extends Helper_Abstract_Addon {
 		/* Create new intances of the plugin's classes */
 		$group_checker = new DoesTemplateHaveGroup( GPDFAPI::get_mvc_class( 'Model_Form_Settings' ), GPDFAPI::get_templates_class(), $this->log );
 
+		/* Register our classes and pass back up to the parent initialiser */
 		$classes = array_merge( $classes, [
 			new LabelsAddFields( $group_checker, $this->log ),
 			new DisplayFieldLabel( $this->log ),
@@ -90,6 +91,9 @@ class Bootstrap extends Helper_Abstract_Addon {
 			new ProductTableAddFields( $group_checker, $this->log ),
 			new DisableProductTable( $this->log ),
 		] );
+
+		/* Include links on plugin page */
+		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
 
 		/* Run the setup */
 		parent::init( $classes );
@@ -121,6 +125,30 @@ class Bootstrap extends Helper_Abstract_Addon {
 		);
 
 		$this->log->notice( sprintf( '%s plugin updater initialised', $this->get_name() ) );
+	}
+
+	/**
+	 * Show row meta on the plugin screen.
+	 *
+	 * @param    mixed $links Plugin Row Meta
+	 * @param    mixed $file  Plugin Base file
+	 *
+	 * @return    array
+	 *
+	 * @since  1.0
+	 */
+	public function plugin_row_meta( $links, $file ) {
+
+		if ( $file === plugin_basename( GFPDF_CORE_BOOSTER_FILE ) ) {
+			$row_meta = [
+				'docs'    => '<a href="' . esc_url( 'https://gravitypdf.com/documentation/v4/shop-plugin-core-booster-add-on/' ) . '" title="' . esc_attr__( 'View plugin Documentation', 'gravity-pdf-core-booster' ) . '">' . esc_html__( 'Docs', 'gravity-forms-pdf-extended' ) . '</a>',
+				'support' => '<a href="' . esc_url( 'https://gravitypdf.com/support/#contact-support' ) . '" title="' . esc_attr__( 'Get Help and Support', 'gravity-forms-pdf-extended' ) . '">' . esc_html__( 'Support', 'gravity-forms-pdf-extended' ) . '</a>',
+			];
+
+			return array_merge( $links, $row_meta );
+		}
+
+		return (array) $links;
 	}
 }
 
