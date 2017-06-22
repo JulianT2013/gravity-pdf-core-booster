@@ -57,7 +57,7 @@ class AllMultiselect extends Field_Multiselect {
 	 * @since 1.0
 	 */
 	public function html( $value = '', $label = true ) {
-		$selected_items_value = $this->get_select_items_values();
+		$selected_items_value = $this->get_select_items_values( $value );
 
 		$html = '<ul class="checked multiselect multiselect-show-all-options">';
 		foreach ( $this->field->choices as $key => $option ) {
@@ -65,7 +65,7 @@ class AllMultiselect extends Field_Multiselect {
 		}
 		$html .= '</ul>';
 
-		return Helper_Abstract_Fields::html( $html );
+		return ( $label ) ? Helper_Abstract_Fields::html( $html, $label ) : $html;
 	}
 
 	/**
@@ -95,8 +95,8 @@ class AllMultiselect extends Field_Multiselect {
 	 *
 	 * @since 1.0
 	 */
-	private function get_select_items_values() {
-		$selected_items = $this->value();
+	private function get_select_items_values( $value = '' ) {
+		$selected_items = ($value) ? $value : $this->value();
 
 		return array_map( function( $item ) {
 			return $item['value'];

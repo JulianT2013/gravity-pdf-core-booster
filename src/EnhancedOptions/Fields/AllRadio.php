@@ -57,11 +57,11 @@ class AllRadio extends Field_Radio {
 	 * @since 1.0
 	 */
 	public function html( $value = '', $label = true ) {
-		$selected_item = $this->value();
+		$selected_item = ($value) ? $value : $this->value();
 		$field_choices = $this->field->choices;
 
 		/* Add Other option if present */
-		if ( $this->selected_is_other( $field_choices, $selected_item['value'] ) ) {
+		if ( isset( $selected_item['value'] ) && $this->selected_is_other( $field_choices, $selected_item['value'] ) ) {
 			$field_choices[] = [
 				'text'  => $selected_item['value'],
 				'value' => $selected_item['value'],
@@ -76,7 +76,7 @@ class AllRadio extends Field_Radio {
 
 		$html .= '</ul>';
 
-		return Helper_Abstract_Fields::html( $html );
+		return ( $label ) ? Helper_Abstract_Fields::html( $html, $label ) : $html;
 	}
 
 	/**

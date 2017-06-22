@@ -57,7 +57,7 @@ class AllSelect extends Field_Select {
 	 * @since 1.0
 	 */
 	public function html( $value = '', $label = true ) {
-		$selected_item = $this->value();
+		$selected_item = ($value) ? $value : $this->value();
 
 		$html = '<ul class="checked select select-show-all-options">';
 		foreach ( $this->field->choices as $key => $option ) {
@@ -66,7 +66,7 @@ class AllSelect extends Field_Select {
 
 		$html .= '</ul>';
 
-		return Helper_Abstract_Fields::html( $html );
+		return ( $label ) ? Helper_Abstract_Fields::html( $html, $label ) : $html;
 	}
 
 	/**
