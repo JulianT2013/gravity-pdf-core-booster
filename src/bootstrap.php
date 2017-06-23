@@ -23,8 +23,6 @@ use GFPDF\Helper\Helper_Notices;
 use GPDFAPI;
 
 /**
- * Bootstrap Class
- *
  * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
