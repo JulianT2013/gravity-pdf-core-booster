@@ -17,7 +17,7 @@ The `development` branch is considered our bleeding edge branch, with all new ch
 
 # Installation
 
-Before beginning, ensure you have [Git](https://git-scm.com/) and [Composer](https://getcomposer.org/) installed and their commands are globally accessible via the command line.
+Before beginning, ensure you have [Git](https://git-scm.com/), [Composer](https://getcomposer.org/) and [Yarn](https://yarnpkg.com/en/docs/install) installed and their commands are globally accessible via the command line.
 
 1. Clone the repository using `git clone https://github.com/GravityPDF/gravity-pdf-core-booster/`
 1. Open your terminal / command prompt to the Gravity PDF Core Booster root directory and run `composer install`
