@@ -1,7 +1,7 @@
 Gravity PDF Core Booster
 ==========================
 
-![Core Booster Artwork](https://resources.gravitypdf.com/uploads/edd/2017/06/cover-artwork-shorter.png)
+![Core Booster Artwork](https://resources.gravitypdf.com/uploads/edd/2017/06/cover-artwork-shorter-1.png)
 
 [![Build Status](https://travis-ci.org/GravityPDF/gravity-pdf-core-booster.svg?branch=development)](https://travis-ci.org/GravityPDF/gravity-pdf-core-booster)
 
