@@ -5,5 +5,6 @@
 /README.md      	export-ignore
 /CONTRIBUTING.md   	export-ignore
 /.travis.yml	 	export-ignore
+/.editorconfig      export-ignore
 
 *.sh eol=lf
