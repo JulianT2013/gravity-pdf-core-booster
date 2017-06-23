@@ -6,7 +6,7 @@ if [ $# -lt 1 ]; then
 fi
 
 VERSION=$1
-BRANCH=${4-development}
+BRANCH=${2-master}
 PACKAGE_DIR="./tmp/package/${VERSION}"
 
 # Create the working directory
@@ -17,5 +17,21 @@ git archive ${BRANCH} --output ${PACKAGE_DIR}/package.tar.gz
 tar -zxf ${PACKAGE_DIR}/package.tar.gz --directory ${PACKAGE_DIR} && rm ${PACKAGE_DIR}/package.tar.gz
 
 # Run Composer
-composer install --no-dev  --prefer-dist --optimize-autoloader --working-dir ${PACKAGE_DIR}
-rm ${PACKAGE_DIR}/composer.json && rm ${PACKAGE_DIR}/composer.lock
+composer install --quiet --no-dev  --prefer-dist --optimize-autoloader --working-dir ${PACKAGE_DIR}
+
+# Cleanup Node JS
+rm -R ${PACKAGE_DIR}/node_modules
+
+# Cleanup additional build files
+FILES=(
+"${PACKAGE_DIR}/composer.json"
+"${PACKAGE_DIR}/composer.lock"
+"${PACKAGE_DIR}/package.json"
+"${PACKAGE_DIR}/yarn.lock"
+"${PACKAGE_DIR}/gulpfile.js"
+)
+
+for i in "${FILES[@]}"
+do
+    rm ${i}
+done
