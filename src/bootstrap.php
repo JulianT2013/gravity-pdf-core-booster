@@ -91,6 +91,7 @@ class Bootstrap extends Helper_Abstract_Addon {
 		] );
 
 		/* Include links on plugin page */
+		add_action( 'after_plugin_row_' . plugin_basename( GFPDF_CORE_BOOSTER_FILE ), [ $this, 'license_registration' ] );
 		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
 
 		/* Run the setup */
@@ -123,6 +124,38 @@ class Bootstrap extends Helper_Abstract_Addon {
 		);
 
 		$this->log->notice( sprintf( '%s plugin updater initialised', $this->get_name() ) );
+	}
+
+	/**
+	 * @since 1.0
+	 */
+	public function license_registration() {
+
+		$license_info = $this->get_license_info();
+		if ( $license_info['status'] === 'active' ) {
+			return;
+		}
+
+		?>
+
+        <tr class="plugin-update-tr">
+            <td colspan="3" class="plugin-update colspanchange">
+                <div class="update-message">
+					<?php
+					printf(
+						esc_html__(
+							'%sRegister your copy of Gravity PDF Core Booster%s to receive access to automatic upgrades and support. Need a license key? %sPurchase one now%s.',
+							'gravity-forms-pdf-extended'
+						),
+						'<a href="' . admin_url( 'admin.php?page=gf_settings&subview=PDF&tab=license' ) . '">', '</a>',
+						'<a href="' . esc_url( 'https://gravitypdf.com/checkout/?edd_action=add_to_cart&download_id=13035' ) . '">', '</a>'
+					)
+					?>
+                </div>
+            </td>
+        </tr>
+
+		<?php
 	}
 
 	/**
