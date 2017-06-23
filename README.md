@@ -1,6 +1,8 @@
 Gravity PDF Core Booster
 ==========================
 
+![Core Booster Artwork](https://resources.gravitypdf.com/uploads/edd/2017/06/cover-artwork-shorter.png)
+
 [![Build Status](https://travis-ci.org/GravityPDF/gravity-pdf-core-booster.svg?branch=development)](https://travis-ci.org/GravityPDF/gravity-pdf-core-booster)
 
 Gravity PDF Core Booster is a commercial plugin [available from GravityPDF.com](https://gravitypdf.com/shop/core-booster-add-on/). The plugin is hosted here on a public GitHub repository in order to better facilitate community contributions from developers and users. If you have a suggestion, a bug report, or a patch for an issue, feel free to submit it here.
