@@ -102,7 +102,7 @@ class AddFields implements Helper_Interface_Filters {
 	public function add_template_option( $settings ) {
 
 		$override          = apply_filters( 'gfpdf_override_enhanced_options_fields', false, $settings ); /* Change this to true to override the core / universal check */
-		$exclude_templates = apply_filters( 'gfpdf_excluded_templates', [ 'gpdf-cellulose' ], $settings, 'enhanced-options' ); /* Exclude this option for specific templates */
+		$exclude_templates = apply_filters( 'gfpdf_excluded_templates', [], $settings, 'enhanced-options' ); /* Exclude this option for specific templates */
 
 		if ( ! in_array( $this->group_checker->get_template_name(), $exclude_templates ) && ( $override || $this->group_checker->has_group() ) ) {
 			$settings['show_all_options'] = [
