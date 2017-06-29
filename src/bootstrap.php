@@ -117,8 +117,8 @@ class Bootstrap extends Helper_Abstract_Addon {
 			[
 				'version'   => $this->get_version(),
 				'license'   => $license_info['license'],
-				'item_name' => $this->get_name(),
-				'author'    => $this->get_version(),
+				'item_name' => $this->get_short_name(),
+				'author'    => $this->get_author(),
 				'beta'      => false,
 			]
 		);
