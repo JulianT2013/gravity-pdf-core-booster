@@ -11,6 +11,7 @@ use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllProductOptions;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllRadio;
 use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllSelect;
 use Monolog\Logger;
+use GFCommon;
 
 /**
  * @package     Gravity PDF Core Booster
@@ -150,7 +151,7 @@ class DisplayAllOptions implements Helper_Interface_Actions, Helper_Interface_Fi
 	public function maybe_autoload_class( $class, $field, $entry ) {
 
 		/* Ensure the settings have been set and we aren't too early in the process */
-		if ( isset( $this->settings['show_all_options'] ) && is_array( $this->settings['show_all_options'] ) ) {
+		if ( isset( $this->settings['show_all_options'] ) && is_array( $this->settings['show_all_options'] ) && ! GFCommon::is_product_field( $field->type ) ) {
 			$option_config = $this->settings['show_all_options'];
 
 			/*
