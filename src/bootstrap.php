@@ -90,10 +90,6 @@ class Bootstrap extends Helper_Abstract_Addon {
 			new DisableProductTable( $this->log ),
 		] );
 
-		/* Include links on plugin page */
-		add_action( 'after_plugin_row_' . plugin_basename( GFPDF_CORE_BOOSTER_FILE ), [ $this, 'license_registration' ] );
-		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 2 );
-
 		/* Run the setup */
 		parent::init( $classes );
 	}
@@ -105,11 +101,7 @@ class Bootstrap extends Helper_Abstract_Addon {
 	 */
 	public function plugin_updater() {
 
-		/* Skip over this addon if license status isn't active */
 		$license_info = $this->get_license_info();
-		if ( $license_info['status'] !== 'active' ) {
-			return;
-		}
 
 		new EDD_SL_Plugin_Updater(
 			$this->data->store_url,
@@ -124,62 +116,6 @@ class Bootstrap extends Helper_Abstract_Addon {
 		);
 
 		$this->log->notice( sprintf( '%s plugin updater initialised', $this->get_name() ) );
-	}
-
-	/**
-	 * @since 1.0
-	 */
-	public function license_registration() {
-
-		$license_info = $this->get_license_info();
-		if ( $license_info['status'] === 'active' ) {
-			return;
-		}
-
-		?>
-
-        <tr class="plugin-update-tr">
-            <td colspan="3" class="plugin-update colspanchange">
-                <div class="update-message">
-					<?php
-					printf(
-						esc_html__(
-							'%sRegister your copy of Gravity PDF Core Booster%s to receive access to automatic upgrades and support. Need a license key? %sPurchase one now%s.',
-							'gravity-forms-pdf-extended'
-						),
-						'<a href="' . admin_url( 'admin.php?page=gf_settings&subview=PDF&tab=license' ) . '">', '</a>',
-						'<a href="' . esc_url( 'https://gravitypdf.com/checkout/?edd_action=add_to_cart&download_id=13035' ) . '">', '</a>'
-					)
-					?>
-                </div>
-            </td>
-        </tr>
-
-		<?php
-	}
-
-	/**
-	 * Show row meta on the plugin screen.
-	 *
-	 * @param    mixed $links Plugin Row Meta
-	 * @param    mixed $file  Plugin Base file
-	 *
-	 * @return    array
-	 *
-	 * @since  1.0
-	 */
-	public function plugin_row_meta( $links, $file ) {
-
-		if ( $file === plugin_basename( GFPDF_CORE_BOOSTER_FILE ) ) {
-			$row_meta = [
-				'docs'    => '<a href="' . esc_url( 'https://gravitypdf.com/documentation/v4/shop-plugin-core-booster-add-on/' ) . '" title="' . esc_attr__( 'View plugin Documentation', 'gravity-pdf-core-booster' ) . '">' . esc_html__( 'Docs', 'gravity-forms-pdf-extended' ) . '</a>',
-				'support' => '<a href="' . esc_url( 'https://gravitypdf.com/support/#contact-support' ) . '" title="' . esc_attr__( 'Get Help and Support', 'gravity-forms-pdf-extended' ) . '">' . esc_html__( 'Support', 'gravity-forms-pdf-extended' ) . '</a>',
-			];
-
-			return array_merge( $links, $row_meta );
-		}
-
-		return (array) $links;
 	}
 }
 
@@ -200,6 +136,8 @@ $plugin = apply_filters( 'gfpdf_core_booster_initialise', new Bootstrap(
 	new Helper_Notices()
 ) );
 
+$plugin->set_edd_download_id( '13035' );
+$plugin->set_addon_documentation_slug( 'shop-plugin-core-booster-add-on' );
 $plugin->init();
 
 /* Use the action below to access our Bootstrap class, and any singletons saved in $plugin->singleton */

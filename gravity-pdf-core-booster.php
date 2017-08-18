@@ -8,7 +8,7 @@
  * Author URI:      https://gravitypdf.com
  * Text Domain:     gravity-pdf-core-booster
  * Domain Path:     /languages
- * Version:         0.2
+ * Version:         1.0
  */
 
 /**
@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 define( 'GFPDF_CORE_BOOSTER_FILE', __FILE__ );
-define( 'GFPDF_CORE_BOOSTER_VERSION', '0.2' );
+define( 'GFPDF_CORE_BOOSTER_VERSION', '1.0' );
 
 /**
  * Class GPDF_Core_Booster_Checks
@@ -67,7 +67,7 @@ class GPDF_Core_Booster_Checks {
 	 *
 	 * @since 1.0
 	 */
-	private $required_gravitypdf_version = '4.2.0-beta1';
+	private $required_gravitypdf_version = '4.3.0-beta1';
 
 	/**
 	 * Run our pre-checks and if it passes bootstrap the plugin
@@ -88,7 +88,9 @@ class GPDF_Core_Booster_Checks {
 			return null;
 		}
 
-		require_once __DIR__ . '/src/bootstrap.php';
+		add_action( 'gfpdf_fully_loaded', function() {
+			require_once __DIR__ . '/src/bootstrap.php';
+		} );
 	}
 
 	/**
@@ -137,5 +139,7 @@ class GPDF_Core_Booster_Checks {
 }
 
 /* Initialise the software */
-$gravitypdf_core_booster = new GPDF_Core_Booster_Checks();
-add_action( 'gfpdf_fully_loaded', [ $gravitypdf_core_booster, 'init' ] );
+add_action( 'plugins_loaded', function() {
+	$gravitypdf_core_booster = new GPDF_Core_Booster_Checks();
+	$gravitypdf_core_booster->init();
+} );
