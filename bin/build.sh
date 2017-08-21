@@ -7,7 +7,9 @@ fi
 
 VERSION=$1
 BRANCH=${2-master}
-PACKAGE_DIR="./tmp/package/${VERSION}"
+TMP_DIR="./tmp/package/"
+PACKAGE_DIR="${TMP_DIR}${VERSION}"
+PACKAGE_NAME="gravity-pdf-core-booster"
 
 # Create the working directory
 mkdir -p ${PACKAGE_DIR}
@@ -35,3 +37,10 @@ for i in "${FILES[@]}"
 do
     rm ${i}
 done
+
+# Create zip package
+cd ${TMP_DIR}
+rm -R -f ${PACKAGE_NAME}
+mv ${VERSION} ${PACKAGE_NAME}
+zip -r -q ${PACKAGE_NAME}-${VERSION}.zip ${PACKAGE_NAME}
+mv ${PACKAGE_NAME} ${VERSION}
