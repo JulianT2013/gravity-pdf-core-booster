@@ -82,7 +82,7 @@ class TestAddFields extends WP_UnitTestCase {
 		$template = $this->getMock(
 			'\GFPDF\Helper\Helper_Templates',
 			[ 'get_template_info_by_id' ],
-			[ GPDFAPI::get_log_class(), GPDFAPI::get_data_class() ]
+			[ GPDFAPI::get_log_class(), GPDFAPI::get_data_class(), GPDFAPI::get_form_class() ]
 		);
 
 		$template->method( 'get_template_info_by_id' )
