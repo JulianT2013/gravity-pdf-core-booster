@@ -91,7 +91,7 @@ class AllRadio extends Field_Radio {
 	 */
 	private function selected_is_other( $choices, $selected ) {
 		foreach ( $choices as $option ) {
-			if ( $option['value'] === $selected ) {
+			if ( esc_html( $option['value'] ) === $selected ) {
 				return false;
 			}
 		}
@@ -112,7 +112,7 @@ class AllRadio extends Field_Radio {
 	private function get_option_markup( $option, $key, $selected ) {
 		$value            = apply_filters( 'gfpdf_show_field_value', false, $this->field, $option ); /* Set to `true` to show a field's value instead of the label */
 		$sanitized_option = ( $value ) ? $option['value'] : $option['text'];
-		$checked          = ( $option['value'] === $selected ) ? '&#9746;' : '&#9744;';
+		$checked          = ( wp_kses_post( $option['value'] ) === $selected ) ? '&#9746;' : '&#9744;';
 
 		return "<li id='field-{$this->field->id}-option-$key'>
 				<span style='font-size: 125%;'>$checked</span> $sanitized_option
