@@ -56,9 +56,16 @@ class ImageInfo {
 
 		/* Handle both absolute paths and file streams (i.e vfs://path/to/image.jpg) */
 		$dirname = $file_info['dirname'];
-		$dirname .= ( substr( $path, 0, strlen( $file_info['dirname'] ) + 2 ) === substr( $file_info['dirname'], 0, -1 ) . '://' ) ? '//' : '/';
+		$hash    = substr( md5( $file_info['filename'] ), 0, 6 );
 
-		return $dirname . $file_info['filename'] . '-pdf-resized.' . $file_info['extension'];
+		$virtual_fs = substr( $path, 0, strlen( $file_info['dirname'] ) + 2 ) === substr( $file_info['dirname'], 0, -1 ) . '://';
+		$dirname    .= ( $virtual_fs ) ? '//' : '/';
+
+		return $dirname . $file_info['filename'] . '-resized-' . $hash . '.' . $file_info['extension'];
+	}
+
+	public function get_image_name( $path ) {
+		return pathinfo( $path, PATHINFO_BASENAME );
 	}
 
 

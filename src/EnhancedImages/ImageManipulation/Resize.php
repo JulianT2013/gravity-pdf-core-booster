@@ -3,10 +3,9 @@
 namespace GFPDF\Plugins\CoreBooster\EnhancedImages\ImageManipulation;
 
 use GFPDF\Plugins\CoreBooster\Shared\ImageInfo;
-use GFPDF\Helper\Helper_Interface_Actions;
+use GFPDF\Helper\Helper_Interface_Filters;
 use abeautifulsite\SimpleImage;
 
-use GFAPI;
 use Exception;
 
 /**
@@ -46,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @package GFPDF\Plugins\CoreBooster\EnhancedImages\ImageManipulation
  */
-class Resize implements Helper_Interface_Actions {
+class Resize implements Helper_Interface_Filters {
 
 	/**
 	 * @var ImageInfo
@@ -72,15 +71,25 @@ class Resize implements Helper_Interface_Actions {
 	 * @since 1.0
 	 */
 	public function init() {
-		$this->add_actions();
+		$this->add_filters();
 	}
 
-	/**
-	 * @since 1.0
-	 */
-	public function add_actions() {
-		add_action( 'gform_entry_post_save', [ $this, 'maybe_resize_images' ], 10, 2 );
-		add_action( 'gform_after_update_entry', [ $this, 'maybe_resize_images_after_update' ], 10, 2 );
+	public function add_filters() {
+		add_filter( 'gfpdf_queue_initialise', [ $this, 'queue_image_resize' ], 10, 3 );
+	}
+
+	public function queue_image_resize( $queue_data, $entry, $form ) {
+		$files = $this->maybe_resize_images( $entry, $form );
+
+		foreach ( $files as $file ) {
+			$queue_data[] = [
+				'id'   => 'image-resize-' . $this->image_info->get_image_name( $file ),
+				'func' => [ $this, 'handle_image_resize' ],
+				'args' => [ $file ],
+			];
+		}
+
+		return $queue_data;
 	}
 
 	/**
@@ -88,8 +97,12 @@ class Resize implements Helper_Interface_Actions {
 	 * @param $form
 	 *
 	 * @since 1.0
+	 *
+	 * @return array
 	 */
 	public function maybe_resize_images( $entry, $form ) {
+
+		$files_to_resize = [];
 
 		/* Get all file upload fields in the form */
 		$upload_fields = array_filter( $form['fields'], function( $field ) {
@@ -97,45 +110,24 @@ class Resize implements Helper_Interface_Actions {
 		} );
 
 		/* Resize our images (if any) */
-		array_walk( $upload_fields, function( $field ) use ( $entry ) {
-			$files = $this->get_upload_files( $field, $entry );
+		foreach ( $upload_fields as $field ) {
+			$files_to_resize = array_merge( $files_to_resize, $this->get_upload_files( $field, $entry ) );
+		}
 
-			if ( count( $files ) === 0 ) {
-				return;
-			}
-
-			$this->handle_image_resize( $files );
-		} );
+		return $files_to_resize;
 	}
 
 	/**
-	 * @param $form
-	 * @param $entry_id
+	 * Resize image, if not already resized
+	 *
+	 * @param string $path
 	 *
 	 * @since 1.0
 	 */
-	public function maybe_resize_images_after_update( $form, $entry_id ) {
-		$entry = GFAPI::get_entry( $entry_id );
-		$this->maybe_resize_images( $entry, $form );
-	}
-
-
-	/**
-	 * @param array $files
-	 *
-	 * @since 1.0
-	 */
-	public function handle_image_resize( $files ) {
-		array_walk( $files, function( $file ) {
-			$path = $this->image_info->get_file_path( $file );
-
-			/* Check if the image is resized already */
-			if ( $this->image_info->does_file_have_image_extension( $path ) &&
-			     ! is_file( $this->image_info->get_image_resized_filepath( $path ) )
-			) {
-				$this->resize_image( $path );
-			}
-		} );
+	public function handle_image_resize( $path ) {
+		if ( ! is_file( $this->image_info->get_image_resized_filepath( $path ) ) ) {
+			$this->resize_image( $path );
+		}
 	}
 
 	/**
@@ -151,11 +143,12 @@ class Resize implements Helper_Interface_Actions {
 		}
 
 		try {
-			( new SimpleImage( $path ) )
-				->best_fit( 1000, 1000 )
-				->save( $resize_image_path );
+			$img = new SimpleImage( $path );
+			$img->best_fit( 1000, 1000 )
+				->auto_orient()
+			    ->save( $resize_image_path );
 
-			$img = null; /* ensure image is wiped from memory */
+			unset( $img );
 		} catch ( Exception $e ) {
 			/* Log error */
 		}
@@ -173,6 +166,15 @@ class Resize implements Helper_Interface_Actions {
 		$files = $entry[ $field->id ];
 		$files = ( $field->multipleFiles ) ? (array) json_decode( $files ) : [ $files ];
 
-		return array_filter( $files );
+		/* Convert Urls to local paths */
+		$paths = array_map( function( $file ) {
+			return $this->image_info->get_file_path( $file );
+		}, $files );
+
+		/* Filter out non-images */
+
+		return array_filter( $paths, function( $path ) {
+			return $this->image_info->does_file_have_image_extension( $path );
+		} );
 	}
 }
