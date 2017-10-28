@@ -61,7 +61,7 @@ class AllRadio extends Field_Radio {
 		$field_choices = $this->field->choices;
 
 		/* Add Other option if present */
-		if ( isset( $selected_item['value'] ) && $this->selected_is_other( $field_choices, $selected_item['value'] ) ) {
+		if ( isset( $selected_item['value'] ) && strlen( $selected_item['value'] ) > 0 && $this->selected_is_other( $field_choices, $selected_item['value'] ) ) {
 			$field_choices[] = [
 				'text'  => $selected_item['value'],
 				'value' => $selected_item['value'],
