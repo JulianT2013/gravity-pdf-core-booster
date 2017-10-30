@@ -6,7 +6,7 @@ if [ $# -lt 1 ]; then
 fi
 
 VERSION=$1
-BRANCH=${2-master}
+BRANCH=${2-development}
 TMP_DIR="./tmp/package/"
 PACKAGE_DIR="${TMP_DIR}${VERSION}"
 PACKAGE_NAME="gravity-pdf-core-booster"
