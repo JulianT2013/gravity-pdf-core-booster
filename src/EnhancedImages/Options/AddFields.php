@@ -70,6 +70,12 @@ class AddFields implements Helper_Interface_Filters {
 	 */
 	public function init() {
 		$this->add_filters();
+
+		add_action( 'gfpdf_uploaded_images_js', function( $args ) {
+			echo '<script type="text/javascript">' .
+			     file_get_contents( __DIR__ . '/../Javascript/enhanced-images-settings.js' ) .
+			     '</script>';
+		} );
 	}
 
 	/**
@@ -89,9 +95,8 @@ class AddFields implements Helper_Interface_Filters {
 	 * @since 1.0
 	 */
 	public function add_template_option( $settings ) {
-
 		$override          = apply_filters( 'gfpdf_override_enhanced_images_fields', false, $settings ); /* Change this to true to override the core / universal check */
-		$exclude_templates = apply_filters( 'gfpdf_excluded_templates', [ 'gpdf-cellulose' ], $settings, 'product-field' ); /* Exclude this option for specific templates */
+		$exclude_templates = apply_filters( 'gfpdf_excluded_templates_enhanced_images', [], $settings, 'product-field' ); /* Exclude this option for specific templates */
 
 		if ( ! in_array( $this->group_checker->get_template_name(), $exclude_templates ) && ( $override || $this->group_checker->has_group() ) ) {
 			$settings['display_uploaded_images'] = [
@@ -103,7 +108,39 @@ class AddFields implements Helper_Interface_Filters {
 					'No'  => esc_html__( 'No', 'gravity-pdf-core-booster' ),
 				],
 				'std'     => 'No',
-				'tooltip' => '<h6>' . esc_html__( 'Display Uploaded Images', 'gravity-pdf-core-booster' ) . '</h6>' . sprintf( esc_html__( 'When enabled, uploaded images will be displayed in the PDF using a two column layout. If the upload field is included in a column using CSS Ready Classes the images will be stacked instead.', 'gravity-pdf-core-booster' ), '<code>', '</code>' ),
+				'tooltip' => '<h6>' . esc_html__( 'Display Uploaded Images', 'gravity-pdf-core-booster' ) . '</h6>' . esc_html__( 'When enabled, uploaded images will be displayed in the PDF using the image format defined below. Non-image files will continue to be displayed as links in the standard list format.', 'gravity-pdf-core-booster' ),
+			];
+
+			$settings['display_uploaded_images_format'] = [
+				'id'      => 'display_uploaded_images_format',
+				'name'    => esc_html__( 'Image Format', 'gravity-pdf-core-booster' ),
+				'type'    => 'radio',
+				'options' => [
+					'1 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-single-column.png" width="75" alt="' . esc_html__( '1 Column', 'gravity-forms-pdf-extended' ) . '" />',
+					'2 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-two-column.png" width="75" alt="' . esc_html__( '2 Columns', 'gravity-forms-pdf-extended' ) . '" />',
+					'3 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-three-column.png" width="75" alt="' . esc_html__( '3 Columns', 'gravity-forms-pdf-extended' ) . '" />',
+				],
+				'std'     => '1 Column',
+				'class'   => 'image-radio-buttons',
+				'tooltip' => '<h6>' . esc_html__( 'Image Format', 'gravity-pdf-core-booster' ) . '</h6>' . esc_html__( 'Choose to display uploaded images in one-, two- or three-column layouts.', 'gravity-pdf-core-booster' ),
+			];
+
+			$settings['group_uploaded_images'] = [
+				'id'      => 'group_uploaded_images',
+				'name'    => esc_html__( 'Group Images?', 'gravity-pdf-core-booster' ),
+				'type'    => 'radio',
+				'options' => [
+					'Yes' => esc_html__( 'Yes', 'gravity-pdf-core-booster' ),
+					'No'  => esc_html__( 'No', 'gravity-pdf-core-booster' ),
+				],
+				'std'     => 'No',
+				'tooltip' => '<h6>' . esc_html__( 'Group Images', 'gravity-pdf-core-booster' ) . '</h6>' . esc_html__( 'When enabled, any images in your upload fields are all grouped at the end of the PDF. This helps with the overall document readability and format.', 'gravity-pdf-core-booster' ),
+			];
+
+			$settings['uploaded_images_js'] = [
+				'id'    => 'uploaded_images_js',
+				'type'  => 'hook',
+				'class' => 'gfpdf-hidden',
 			];
 		}
 
