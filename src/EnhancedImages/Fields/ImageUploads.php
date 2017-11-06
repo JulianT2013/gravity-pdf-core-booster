@@ -12,7 +12,7 @@ use GFPDF\Helper\Helper_Abstract_Fields;
  * @package     Gravity PDF
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0
+ * @since       2.0
  */
 
 /* Exit if accessed directly */
@@ -43,25 +43,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Controls the display and output of the Checkbox HTML
  *
- * @since 1.0
+ * @since 2.0
  */
 class ImageUploads extends Field_Fileupload {
 
 	/**
 	 * @var ImageInfo
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected $image_info;
 
 	/**
+	 * @var array
+     *
+     * @since 2.0
+	 */
+	protected $pdf_settings;
+
+	/**
 	 * @param ImageInfo $image_info
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function set_image_helper( ImageInfo $image_info ) {
 		$this->image_info = $image_info;
 	}
+
+	/**
+	 * @param $settings
+     *
+     * @since 2.0
+	 */
+	public function set_pdf_settings( $settings ) {
+	    $this->pdf_settings = $settings;
+    }
 
 	/**
 	 * Include all checkbox options in the list and tick the ones that were selected
@@ -71,7 +87,7 @@ class ImageUploads extends Field_Fileupload {
 	 *
 	 * @return string
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function html( $value = '', $label = true ) {
 		$uploads           = $this->value();
@@ -95,7 +111,7 @@ class ImageUploads extends Field_Fileupload {
 	 *
 	 * @return array
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected function get_images( $uploads ) {
 		return array_filter( $uploads, function( $path ) {
@@ -108,7 +124,7 @@ class ImageUploads extends Field_Fileupload {
 	 *
 	 * @return array
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected function get_non_images( $uploads ) {
 		return array_filter( $uploads, function( $path ) {
@@ -121,7 +137,7 @@ class ImageUploads extends Field_Fileupload {
 	 *
 	 * @return string
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function get_non_image_html( $uploads ) {
 		if ( count( $uploads ) == 0 ) {
@@ -149,7 +165,7 @@ class ImageUploads extends Field_Fileupload {
 	 *
 	 * @return string
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function get_image_html( $uploads ) {
 		if ( count( $uploads ) === 0 ) {
@@ -158,7 +174,7 @@ class ImageUploads extends Field_Fileupload {
 
 		ob_start();
 		?>
-        <div class="fileupload-images-container">
+        <div class="fileupload-images-container <?php echo $this->get_image_column_class(); ?>">
 			<?php foreach ( $uploads as $i => $file ):
 				$path = $this->misc->convert_url_to_path( $file );
                 $resized_image = ( $path !== false ) ? $this->image_info->get_image_resized_filepath( $path ) : false;
@@ -174,7 +190,7 @@ class ImageUploads extends Field_Fileupload {
 
                 <div id="field-<?php echo $this->field->id; ?>-image-option-<?php echo $i; ?>" class="fileupload-images">
                     <a href="<?php echo esc_url( $file ); ?>">
-                        <img src="<?php echo $img_string; ?>"/>
+                        <img src="<?php echo $img_string; ?>" style="max-height: 80mm"/>
                     </a>
                 </div>
 			<?php endforeach; ?>
@@ -183,4 +199,29 @@ class ImageUploads extends Field_Fileupload {
 
 		return ob_get_clean();
 	}
+
+	/**
+	 * @return string
+     *
+     * @since 2.0
+	 */
+	protected function get_image_column_class() {
+		/* Determine how the images should be displayed */
+		$img_format = ( isset( $this->pdf_settings['display_uploaded_images_format'] ) ) ? $this->pdf_settings['display_uploaded_images_format'] : '1 Column';
+		switch( $img_format ) {
+			case '2 Column':
+				$img_format_css = 'fileupload-images-two-col';
+			break;
+
+			case '3 Column':
+				$img_format_css = 'fileupload-images-three-col';
+			break;
+
+			default:
+				$img_format_css = 'fileupload-images-one-col';
+			break;
+		}
+
+		return $img_format_css;
+    }
 }

@@ -7,21 +7,18 @@
 }
 
 .fileupload-images {
-    float: left;
-    width: 47%;
-    padding: 0 1.5% 3%;
+    padding: 0 0 3%;
+    text-align: center;
 }
 
-.gf_left_half .fileupload-images,
-.gf_right_half .fileupload-images,
-.gf_left_third .fileupload-images,
-.gf_middle_third .fileupload-images,
-.gf_right_third .fileupload-images,
-.gf_first_quarter .fileupload-images,
-.gf_second_quarter .fileupload-images,
-.gf_third_quarter .fileupload-images,
-.gf_fourth_quarter .fileupload-images {
-    float: none;
-    width: 100%;
-    padding: 0 0 3%;
+.fileupload-images-two-col .fileupload-images {
+    float: left;
+    width: 47%;
+    padding: 0 1.4% 3%;
+}
+
+.fileupload-images-three-col .fileupload-images {
+    float: left;
+    width: 30.3%;
+    padding: 0 1.5% 3%;
 }

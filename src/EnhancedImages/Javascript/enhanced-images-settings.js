@@ -11,7 +11,8 @@
         $('input[name=gfpdf_settings\\[display_uploaded_images_format\\]]').parents('tr').hide()
         $('input[name=gfpdf_settings\\[group_uploaded_images\\]]').parents('tr').hide()
       }
-    }).trigger('change')
+    })
 
+    $radio.filter(':checked').trigger('change')
   })
 })(jQuery)

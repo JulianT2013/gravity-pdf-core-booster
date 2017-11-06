@@ -9,7 +9,7 @@ use GFPDF\Helper\Helper_Interface_Filters;
  * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0
+ * @since       2.0
  */
 
 /* Exit if accessed directly */
@@ -47,7 +47,7 @@ class AddFields implements Helper_Interface_Filters {
 	/**
 	 * @var DoesTemplateHaveGroup
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	private $group_checker;
 
@@ -56,7 +56,7 @@ class AddFields implements Helper_Interface_Filters {
 	 *
 	 * @param DoesTemplateHaveGroup $group_checker
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function __construct( DoesTemplateHaveGroup $group_checker ) {
 		$this->group_checker = $group_checker;
@@ -66,7 +66,7 @@ class AddFields implements Helper_Interface_Filters {
 	/**
 	 * Initialise our module
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function init() {
 		$this->add_filters();
@@ -79,7 +79,7 @@ class AddFields implements Helper_Interface_Filters {
 	}
 
 	/**
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function add_filters() {
 		add_filter( 'gfpdf_form_settings_custom_appearance', [ $this, 'add_template_option' ], 9999 );
@@ -92,7 +92,7 @@ class AddFields implements Helper_Interface_Filters {
 	 *
 	 * @return array
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function add_template_option( $settings ) {
 		$override          = apply_filters( 'gfpdf_override_enhanced_images_fields', false, $settings ); /* Change this to true to override the core / universal check */

@@ -13,7 +13,7 @@ use GPDFAPI;
  * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0
+ * @since       2.0
  */
 
 /* Exit if accessed directly */
@@ -51,14 +51,14 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	/**
 	 * @var ImageInfo
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected $image_info;
 
 	/**
 	 * @var array The current PDF Settings
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	private $settings;
 
@@ -67,7 +67,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	 *
 	 * @param ImageInfo $image_info
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function __construct( ImageInfo $image_info ) {
 		$this->image_info = $image_info;
@@ -76,7 +76,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	/**
 	 * Initialise our module
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function init() {
 		$this->add_actions();
@@ -84,7 +84,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	}
 
 	/**
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function add_actions() {
 		add_action( 'gfpdf_pre_html_fields', [ $this, 'save_settings' ], 10, 2 );
@@ -92,7 +92,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	}
 
 	/**
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function add_filters() {
 		add_filter( 'gfpdf_field_class', [ $this, 'maybe_autoload_class' ], 10, 3 );
@@ -104,7 +104,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	 * @param array $entry
 	 * @param array $settings
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function save_settings( $entry, $settings ) {
 		$this->settings = $settings['settings'];
@@ -115,7 +115,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	 *
 	 * @return array
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function get_settings() {
 		return $this->settings;
@@ -124,7 +124,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	/**
 	 * Remove the current saved PDF Settings
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function reset_settings() {
 		$this->settings = null;
@@ -140,7 +140,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	 *
 	 * @return Helper_Abstract_Fields
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function maybe_autoload_class( $class, $field, $entry ) {
 
@@ -149,6 +149,7 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 			if ( $field->type === 'fileupload' ) {
 				$image_class = new ImageUploads( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 				$image_class->set_image_helper( $this->image_info );
+				$image_class->set_pdf_settings( $this->settings );
 
 				return $image_class;
 			}

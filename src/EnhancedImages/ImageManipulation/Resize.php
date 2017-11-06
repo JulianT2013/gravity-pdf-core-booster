@@ -12,7 +12,7 @@ use Exception;
  * @package     Gravity PDF Core Booster
  * @copyright   Copyright (c) 2017, Blue Liquid Designs
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.0
+ * @since       2.0
  */
 
 /* Exit if accessed directly */
@@ -50,7 +50,7 @@ class Resize implements Helper_Interface_Filters {
 	/**
 	 * @var ImageInfo
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected $image_info;
 
@@ -59,7 +59,7 @@ class Resize implements Helper_Interface_Filters {
 	 *
 	 * @param ImageInfo $image_info
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function __construct( ImageInfo $image_info ) {
 		$this->image_info = $image_info;
@@ -68,7 +68,7 @@ class Resize implements Helper_Interface_Filters {
 	/**
 	 * Initialise our module
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function init() {
 		$this->add_filters();
@@ -96,7 +96,7 @@ class Resize implements Helper_Interface_Filters {
 	 * @param $entry
 	 * @param $form
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 *
 	 * @return array
 	 */
@@ -122,7 +122,7 @@ class Resize implements Helper_Interface_Filters {
 	 *
 	 * @param string $path
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function handle_image_resize( $path ) {
 		if ( ! is_file( $this->image_info->get_image_resized_filepath( $path ) ) ) {
@@ -133,7 +133,7 @@ class Resize implements Helper_Interface_Filters {
 	/**
 	 * @param string $path
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public function resize_image( $path ) {
 		$resize_image_path = $this->image_info->get_image_resized_filepath( $path );
@@ -160,7 +160,7 @@ class Resize implements Helper_Interface_Filters {
 	 *
 	 * @return array
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	protected function get_upload_files( $field, $entry ) {
 		$files = $entry[ $field->id ];
