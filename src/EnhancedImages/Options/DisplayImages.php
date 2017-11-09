@@ -2,6 +2,8 @@
 
 namespace GFPDF\Plugins\CoreBooster\EnhancedImages\Options;
 
+use GFPDF\Helper\Helper_Field_Container;
+use GFPDF\Plugins\CoreBooster\EnhancedImages\Fields\PostImageUploads;
 use GFPDF\Plugins\CoreBooster\Shared\ImageInfo;
 use GFPDF\Plugins\CoreBooster\EnhancedImages\Fields\ImageUploads;
 use GFPDF\Helper\Helper_Interface_Actions;
@@ -89,6 +91,8 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	public function add_actions() {
 		add_action( 'gfpdf_pre_html_fields', [ $this, 'save_settings' ], 10, 2 );
 		add_action( 'gfpdf_post_html_fields', [ $this, 'reset_settings' ], 10, 2 );
+
+		add_action( 'gfpdf_post_html_fields', [ $this, 'maybe_group_images' ], 5, 2 );
 	}
 
 	/**
@@ -131,9 +135,6 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 	}
 
 	/**
-	 * Check which settings are activate and render the radio/select/checkbox/multiselect fields with our
-	 * modified classes, if needed
-	 *
 	 * @param Helper_Abstract_Fields $class
 	 * @param object                 $field
 	 * @param array                  $entry
@@ -146,8 +147,16 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 
 		/* Ensure the settings have been set and we aren't too early in the process */
 		if ( isset( $this->settings['display_uploaded_images'] ) && $this->settings['display_uploaded_images'] === 'Yes' ) {
-			if ( $field->type === 'fileupload' ) {
-				$image_class = new ImageUploads( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
+			if ( $field->get_input_type() === 'fileupload' ) {
+				$field_class = 'GFPDF\Plugins\CoreBooster\EnhancedImages\Fields\ImageUploads';
+			}
+
+			if ( $field->get_input_type() === 'post_image' ) {
+				$field_class = 'GFPDF\Plugins\CoreBooster\EnhancedImages\Fields\PostImageUploads';
+			}
+
+			if ( isset( $field_class ) ) {
+				$image_class = new $field_class( $field, $entry, GPDFAPI::get_form_class(), GPDFAPI::get_misc_class() );
 				$image_class->set_image_helper( $this->image_info );
 				$image_class->set_pdf_settings( $this->settings );
 
@@ -156,5 +165,37 @@ class DisplayImages implements Helper_Interface_Actions, Helper_Interface_Filter
 		}
 
 		return $class;
+	}
+
+	/**
+	 * Output images at end of PDF (if any)
+	 *
+	 * @param $entry
+	 *
+	 * @since 2.0
+	 */
+	public function maybe_group_images( $entry ) {
+		$should_group_images = ( isset( $this->settings['group_uploaded_images'] ) ) ? $this->settings['group_uploaded_images'] : 'No';
+
+		if ( $should_group_images === 'Yes' ) {
+			$gform     = GPDFAPI::get_form_class();
+			$container = new Helper_Field_Container();
+			$form      = $gform->get_form( $entry['form_id'] );
+
+			foreach ( $form['fields'] as $field ) {
+				if ( $field->get_input_type() === 'fileupload' || $field->get_input_type() === 'post_image' ) {
+					/* Disable CSS Ready classes because grouped images are outside the normal document flow */
+					$field->cssClass = '';
+
+					$image_class = $this->maybe_autoload_class( null, $field, $entry );
+
+					if ( $image_class->has_images() ) {
+						$container->generate( $field );
+						echo $image_class->group_html();
+						$container->close();
+					}
+				}
+			}
+		}
 	}
 }

@@ -116,13 +116,23 @@ class AddFields implements Helper_Interface_Filters {
 				'name'    => esc_html__( 'Image Format', 'gravity-pdf-core-booster' ),
 				'type'    => 'radio',
 				'options' => [
-					'1 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-single-column.png" width="75" alt="' . esc_html__( '1 Column', 'gravity-forms-pdf-extended' ) . '" />',
-					'2 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-two-column.png" width="75" alt="' . esc_html__( '2 Columns', 'gravity-forms-pdf-extended' ) . '" />',
-					'3 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-three-column.png" width="75" alt="' . esc_html__( '3 Columns', 'gravity-forms-pdf-extended' ) . '" />',
+					'1 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-single-column.png" width="75" alt="' . esc_html__( '1 Column', 'gravity-pdf-core-booster' ) . '" />',
+					'2 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-two-column.png" width="75" alt="' . esc_html__( '2 Columns', 'gravity-pdf-core-booster' ) . '" />',
+					'3 Column' => '<img src="' . plugin_dir_url( GFPDF_CORE_BOOSTER_FILE ) . 'assets/images/image-three-column.png" width="75" alt="' . esc_html__( '3 Columns', 'gravity-pdf-core-booster' ) . '" />',
 				],
 				'std'     => '1 Column',
 				'class'   => 'image-radio-buttons',
 				'tooltip' => '<h6>' . esc_html__( 'Image Format', 'gravity-pdf-core-booster' ) . '</h6>' . esc_html__( 'Choose to display uploaded images in one-, two- or three-column layouts.', 'gravity-pdf-core-booster' ),
+			];
+
+			$settings['uploaded_images_max_height'] = [
+				'id'    => 'uploaded_images_max_height',
+				'name'  => esc_html__( 'Maximum Image Height', 'gravity-pdf-core-booster' ),
+				'desc'  => esc_html__( 'Images will be constrained to the set height.', 'gravity-pdf-core-booster' ),
+				'desc2' => 'px',
+				'type'  => 'number',
+				'size'  => 'small',
+				'std'   => '300',
 			];
 
 			$settings['group_uploaded_images'] = [

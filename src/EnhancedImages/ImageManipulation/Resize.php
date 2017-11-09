@@ -106,7 +106,7 @@ class Resize implements Helper_Interface_Filters {
 
 		/* Get all file upload fields in the form */
 		$upload_fields = array_filter( $form['fields'], function( $field ) {
-			return $field->get_input_type() === 'fileupload';
+			return $field->get_input_type() === 'fileupload' || $field->get_input_type() === 'post_image';
 		} );
 
 		/* Resize our images (if any) */
@@ -145,7 +145,7 @@ class Resize implements Helper_Interface_Filters {
 		try {
 			$img = new SimpleImage( $path );
 			$img->best_fit( 1000, 1000 )
-				->auto_orient()
+			    ->auto_orient()
 			    ->save( $resize_image_path );
 
 			unset( $img );
@@ -166,13 +166,18 @@ class Resize implements Helper_Interface_Filters {
 		$files = $entry[ $field->id ];
 		$files = ( $field->multipleFiles ) ? (array) json_decode( $files ) : [ $files ];
 
+		/* If Post Image, force into the correct format for image processing */
+		if ( $field->get_input_type() === 'post_image' ) {
+			$image_data = explode( '|:|', $files[0] );
+			$files[0] = $image_data[0];
+		}
+
 		/* Convert Urls to local paths */
 		$paths = array_map( function( $file ) {
 			return $this->image_info->get_file_path( $file );
 		}, $files );
 
 		/* Filter out non-images */
-
 		return array_filter( $paths, function( $path ) {
 			return $this->image_info->does_file_have_image_extension( $path );
 		} );
