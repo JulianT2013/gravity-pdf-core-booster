@@ -91,7 +91,7 @@ class AllRadio extends Field_Radio {
 	 */
 	private function selected_is_other( $choices, $selected ) {
 		foreach ( $choices as $option ) {
-			if ( esc_html( $option['value'] ) === $selected ) {
+			if ( wp_kses_post( $option['value'] ) === $selected ) {
 				return false;
 			}
 		}
