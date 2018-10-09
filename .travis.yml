@@ -11,11 +11,6 @@ php:
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
-matrix:
-  include:
-  - php: 7.2
-    env: WP_VERSION=4.8 WP_MULTISITE=0
-
 before_script:
   - if [[ $TRAVIS_PHP_VERSION != 7.1 ]]; then phpenv config-rm xdebug.ini; fi
   - if find . -name "*.php" -exec php -l {} \; | grep "unexpected $end"; then exit 1; fi
