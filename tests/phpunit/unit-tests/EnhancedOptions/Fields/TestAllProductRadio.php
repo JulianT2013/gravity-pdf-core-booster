@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class TestAllProduct
+ * Class TestAllProductRadio
  *
  * @package GFPDF\Tests\EnhancedOptions
  *
@@ -72,7 +72,7 @@ class TestAllProductRadio extends WP_UnitTestCase {
 			'currency' => 'USD',
 			'id'       => 0,
 			'1'        => '',
-			'2'        => 'vThird Choice2|$6',
+			'2'        => 'vThird Choice2|6',
 			'3'        => '',
 			'4'        => '',
 			'5'        => '',

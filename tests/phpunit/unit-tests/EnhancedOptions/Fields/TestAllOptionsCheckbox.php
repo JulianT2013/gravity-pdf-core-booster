@@ -2,7 +2,7 @@
 
 namespace GFPDF\Tests\EnhancedOptions;
 
-use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllProduct;
+use GFPDF\Plugins\CoreBooster\EnhancedOptions\Fields\AllOptions;
 use GFPDF\Helper\Fields\Field_Products;
 use WP_UnitTestCase;
 
@@ -39,13 +39,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 
 /**
- * Class TestAllProductSelect
+ * Class TestAllOptionsCheckbox
  *
  * @package GFPDF\Tests\EnhancedOptions
  *
  * @group   options
  */
-class TestAllProductSelect extends WP_UnitTestCase {
+class TestAllOptionsCheckbox extends WP_UnitTestCase {
 
 	/**
 	 * @var AllProduct
@@ -71,14 +71,16 @@ class TestAllProductSelect extends WP_UnitTestCase {
 			'form_id'  => $this->form_id,
 			'currency' => 'USD',
 			'id'       => 0,
-			'1'        => 'vSecond Choice1|1',
-			'2'        => '',
+			'1'        => '',
+			'2'        => 'vFirst Choice2|4',
 			'3'        => '',
-			'4'        => '',
+			'4.1'      => 'vFirst Option4|10',
+			'4.2'      => '',
+			'4.3'      => 'vThird Option4|12',
 			'5'        => '',
 		];
 
-		$this->class = new AllProduct( $form['fields'][0], $entry, \GPDFAPI::get_form_class(), \GPDFAPI::get_misc_class() );
+		$this->class = new AllOptions( $form['fields'][3], $entry, \GPDFAPI::get_form_class(), \GPDFAPI::get_misc_class() );
 		$this->class->set_products( new Field_Products( new \GF_Field(), $entry, \GPDFAPI::get_form_class(), \GPDFAPI::get_misc_class() ) );
 	}
 
@@ -97,9 +99,9 @@ class TestAllProductSelect extends WP_UnitTestCase {
 		$results = $this->class->html();
 
 		/* Check all fields get rendered with an unchecked box */
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> First Choice1 - $1.00" ) );
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> Second Choice1 - $2.00" ) );
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Third Choice1 - $3.00" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> First Option4 - $10.00" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> Second Option4 - $11.00" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> Third Option4 - $12.00" ) );
 	}
 
 	/**
@@ -111,8 +113,8 @@ class TestAllProductSelect extends WP_UnitTestCase {
 
 		$results = $this->class->html();
 
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> vFirst Choice1 - $1.00" ) );
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> vSecond Choice1 - $2.00" ) );
-		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> vThird Choice1 - $3.00" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> vFirst Option4 - $10.00" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9744;</span> vSecond Option4 - $11.00" ) );
+		$this->assertNotFalse( strpos( $results, "<span style='font-size: 125%;'>&#9746;</span> vThird Option4 - $12.00" ) );
 	}
 }
